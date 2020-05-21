@@ -3,7 +3,13 @@ package de.htwg.se.checkers.model
 case class Board(cells: Matrix[Cell]) {
   def this() = this(new Matrix[Cell](Cell(0,0,Color.white)))
 
-  //returns board with colored cells and pieces in starting position
+  /**
+   * @param piecesBlack TODO
+   * @param piecesWhite TODO
+   *
+   * @return Returns board with colored cells and pieces in starting position
+   * */
+
   def createBoard(piecesBlack:Vector[Piece], piecesWhite:Vector[Piece]): Board = {
     var temp: Board = this
     for (i <- 0 until 8;
@@ -43,7 +49,18 @@ case class Board(cells: Matrix[Cell]) {
     i >= 5
   }
 
-  //moves a pieces after checking all the rules, returns a new board, two vectors of pieces and a color (lastMoveColor)
+  /**
+   *  @param s TODO
+   *  @param d TODO
+   *  @param lmc TODO
+   *  @param pc1 TODO
+   *  @param pc2 TODO
+   *
+   *  Moves a pieces after checking all the rules
+   *
+   *  @return Returns a new board, two vectors of pieces and a color (lastMoveColor)
+   * */
+
   def movePiece(s:Cell, d:Cell, lmc:Color.Value, pc1:Vector[Piece], pc2:Vector[Piece]): (Board, Vector[Piece], Vector[Piece], Color.Value) = {
     val pb:Vector[Piece] = color(pc1, pc2)._1 //piecesBlack
     val pw:Vector[Piece] = color(pc1, pc2)._2 //piecesWhite
@@ -209,7 +226,17 @@ case class Board(cells: Matrix[Cell]) {
     middleCell.piece.isDefined && (middleCell.piece.get.color != start.piece.get.color)
   }
 
-  //counts kicked pieces of two vectors, returns int, black then white
+  /**
+   * @param pc1 TODO
+   * @param pc2 TODO
+   *
+   *  counts kicked pieces of two vectors
+   *
+   * @return Returns an Integer representing the amount of kicked pieces per Player
+   *         First the amount of the plack pieces
+   *         Then the amount of the white pieces
+   * */
+
   def countKickedPieces(pc1: Vector[Piece], pc2: Vector[Piece]): (Int, Int) = {
     (pc1(0).color, pc2(0).color) match {
       case (Color.black,_) => (countKickedPieces(pc1), countKickedPieces(pc2))

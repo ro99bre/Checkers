@@ -1,7 +1,8 @@
-package de.htwg.se.checkers.model
+package de.htwg.se.checkers.modelExample
 
-import org.scalatest._
+import de.htwg.se.checkers.model.Player
 import org.junit.runner.RunWith
+import org.scalatest._
 import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
