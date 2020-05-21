@@ -74,7 +74,7 @@ case class Board(cells: Matrix[Cell]) {
   }
 
   //checks all the rules, returns two optional vectors of pieces and a color
-  private def checkRules(s:Cell, d:Cell, lmc:Color.Value, pb:Vector[Piece], pw:Vector[Piece]): (Option[Vector[Piece]], Option[Vector[Piece]], Color.Value) = { //return vector of pieces
+  private def checkRules(s:Cell, d:Cell, lmc:Color.Value, pb:Vector[Piece], pw:Vector[Piece]): (Option[Vector[Piece]], Option[Vector[Piece]], Color.Value) = {
     if (s.piece.isDefined) {
       if (pieceColorCheck(s, lmc) && cellColorCheck(d) && cellEmptyCheck(d)) {
         if (s.piece.get.queen == Queen.isQueen) {
@@ -132,8 +132,8 @@ case class Board(cells: Matrix[Cell]) {
   }
 
   //checks if a piece has arrived at the other side of the board and crowns it, returns updated vector of pieces
-  private def queenDestinationCheck(start:Cell, destination:Cell, piecesBlack:Vector[Piece], piecesWhite:Vector[Piece]): Vector[Piece] = { //return array of pieces
-    (start.piece.get.color, destination.x) match {
+  private def queenDestinationCheck(start:Cell, destination:Cell, piecesBlack:Vector[Piece], piecesWhite:Vector[Piece]): Vector[Piece] = {
+    (start.piece.get.color, destination.y) match {
       case (Color.black, 7) => crown(piecesBlack, piecesBlack.indexOf(start.piece.get))
       case (Color.white, 0) => crown(piecesWhite, piecesWhite.indexOf(start.piece.get))
       case (Color.black,_) => piecesBlack
@@ -147,7 +147,7 @@ case class Board(cells: Matrix[Cell]) {
   }
 
   //checks if a black piece (no queen) is allowed to move to destination cell, returns an optional vector of the opponents' pieces
-  private def moveBlackRules(s:Cell, d:Cell, lastMoveColor:Color.Value, piecesBlack:Vector[Piece], piecesWhite:Vector[Piece]): Option[Vector[Piece]] = { //return option pieces, pieces in method for moving piece
+  private def moveBlackRules(s:Cell, d:Cell, lastMoveColor:Color.Value, piecesBlack:Vector[Piece], piecesWhite:Vector[Piece]): Option[Vector[Piece]] = {
     if (d.y - 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) {
       return Some(allPieces(s, lastMoveColor, piecesBlack, piecesWhite)._2)
     } else if (d.y - 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) {
