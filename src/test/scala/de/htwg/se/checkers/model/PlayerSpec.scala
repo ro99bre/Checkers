@@ -1,4 +1,4 @@
-package checkers.model
+package de.htwg.se.checkers.model
 
 import org.scalatest._
 import org.junit.runner.RunWith
