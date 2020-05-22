@@ -10,10 +10,15 @@ class BoardSpec extends AnyWordSpec with Matchers{
       val piecesBlack = new Pieces(Color.black)
       val piecesWhite = new Pieces(Color.white)
       val piecesWhiteOneKicked = piecesWhite.pieces.updated(0,Piece(Color.white, Queen.notQueen, Kicked.isKicked))
+      val piecesBlackOneKicked = piecesBlack.pieces.updated(0,Piece(Color.black, Queen.notQueen, Kicked.isKicked))
       val piecesWhiteKicked = piecesWhiteOneKicked.updated(1,Piece(Color.white, Queen.notQueen, Kicked.isKicked)).
         updated(2,Piece(Color.white, Queen.notQueen, Kicked.isKicked)).
         updated(3,Piece(Color.white, Queen.notQueen, Kicked.isKicked))
+      val piecesBlackKicked = piecesBlackOneKicked.updated(1,Piece(Color.black, Queen.notQueen, Kicked.isKicked)).
+        updated(2,Piece(Color.black, Queen.notQueen, Kicked.isKicked)).
+        updated(4,Piece(Color.black, Queen.notQueen, Kicked.isKicked))
       val piecesBlackCrowned = piecesBlack.pieces.updated(0,Piece(Color.black, Queen.isQueen, Kicked.notKicked))
+      val piecesWhiteCrowned = piecesWhite.pieces.updated(0,Piece(Color.white, Queen.isQueen, Kicked.notKicked))
       val board = new Board().createBoard(piecesBlack.pieces, piecesWhite.pieces)
       val movedBlackBoard : Board = board.copy(board.cells.replaceCell(2,0,Cell(2,0,Color.black)).
         replaceCell(3,1,Cell(3,1,Color.black,Some(piecesBlack.pieces(0)))))
@@ -62,8 +67,11 @@ class BoardSpec extends AnyWordSpec with Matchers{
         crownedBoard.movePiece(crownedBoard.cells.cell(7,3), crownedBoard.cells.cell(6,4), Color.white,
           piecesBlackCrowned, piecesWhiteKicked) should be(queenMoved, piecesBlackCrowned, piecesWhiteKicked, Color.black)
       }
-      "be able to count kicked Pieces" in {
+      "be able to count black kicked Pieces" in {
         queenMoved.countKickedPieces(piecesBlackCrowned, piecesWhiteKicked) should be(0,4)
+      }
+      "be able to count white kicked Pieces" in {
+        queenMoved.countKickedPieces(piecesWhiteCrowned, piecesBlackKicked) should be(4,0)
       }
     }
   }
