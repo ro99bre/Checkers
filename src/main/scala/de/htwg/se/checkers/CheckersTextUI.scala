@@ -1,18 +1,12 @@
 package de.htwg.se.checkers
 
-import de.htwg.se.checkers.aview.textui
-import de.htwg.se.checkers.model._
+import de.htwg.se.checkers.aview.TextUI
 
 object CheckersTextUI {
 
-  val piecesBlack = new Pieces(Color.black)
-  val piecesWhite = new Pieces(Color.white)
-  val board = new Board().createBoard(piecesBlack.pieces, piecesWhite.pieces)
-  var game = new Game(board,piecesBlack.pieces,piecesWhite.pieces,Color.white)
-
   def main(args: Array[String]): Unit = {
 
-    val tui = new textui()
+    val tui = new TextUI()
     var input: String = ""
 
     println("Started Checkers in TUI Mode")
@@ -26,16 +20,4 @@ object CheckersTextUI {
 
   }
 
-  def exit(): Unit = {
-    //Exit
-    System.exit(0)
-  }
-
-  def newGame(): Unit = {
-    //create new Game
-    val piecesBlack = new Pieces(Color.black)
-    val piecesWhite = new Pieces(Color.white)
-    val board = new Board().createBoard(piecesBlack.pieces, piecesWhite.pieces)
-    game = new Game(board,piecesBlack.pieces,piecesWhite.pieces,Color.white)
-  }
 }
