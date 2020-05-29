@@ -3,14 +3,7 @@ import de.htwg.se.checkers.model._
 
 class TextUI {
 
-  var round = Round()
-
-  /*
-  val piecesBlack = new Pieces(Color.black)
-  val piecesWhite = new Pieces(Color.white)
-  val board = new Board().createBoard(piecesBlack.pieces, piecesWhite.pieces)
-  val game = Game(board,piecesBlack.pieces,piecesWhite.pieces,Color.white)
-  */
+  var game = new Game()
 
   def tuiProcessor(input: String): String ={
 
@@ -19,22 +12,24 @@ class TextUI {
     input.split(" |,").toList match {
 
       case "new" :: "Round" :: Nil =>
-        round = new Round()
+        game = new Game()
         output.append("Started new Round\n")
-        output.append(round.game.toString)
+        output.append(game.toString)
 
 
       case "move" :: xPosOld :: yPosOld :: xPosNew :: yPosNew :: Nil =>
 
-        round.game.movePiece(round.game.cell(xPosOld.toInt,yPosOld.toInt), round.game.cell(xPosNew.toInt,yPosNew.toInt))
+        if (game != game.movePiece(game.cell(yPosOld.toInt,xPosOld.toInt), game.cell(yPosNew.toInt,xPosNew.toInt))) output.append("valid move\n")
+        else output.append("invalid move\n")
 
-        //TODO? Output if move not allowed / If there is a Winner
+        game = game.movePiece(game.cell(yPosOld.toInt,xPosOld.toInt), game.cell(yPosNew.toInt,xPosNew.toInt))
 
-        output.append("Moved a piece\n")
-        output.append(round.game.toString)
+        if (game.winnerColor.isDefined) output.append("Winner: " + game.winnerColor)
+        else if(game.lmc == Color.white) output.append("Next Player: Black")
+        else output.append("Next Player: White")
 
-        //TODO? Alternate between players
 
+        output.append(game.toString)
 
       case "exit" :: Nil =>
         System.exit(0)
@@ -46,6 +41,6 @@ class TextUI {
         output.append("exit:                      Exit the Game.\n")
     }
 
-    return output.toString()
+    output.toString()
   }
 }

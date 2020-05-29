@@ -90,6 +90,9 @@ class GameSpec extends AnyWordSpec with Matchers{
     val string : String = game.toString
     val lostString : String = lostPieces.toString
 
+    "be able to create new game" in {
+      new Game() should be(game)
+    }
     "be able to move a black Piece" in {
       game.movePiece(game.cell(2,0), game.cell(3,1)) should be(movedBlack)
     }

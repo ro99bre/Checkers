@@ -11,12 +11,12 @@ object CheckersTextUI {
 
     println("Started Checkers in TUI Mode")
 
-    while (1 == 1) {
+    do {
       print("Next move: ")
       input = scala.io.StdIn.readLine()
 
       println(tui.tuiProcessor(input))
-    }
+    } while (input != "exit")
 
   }
 
