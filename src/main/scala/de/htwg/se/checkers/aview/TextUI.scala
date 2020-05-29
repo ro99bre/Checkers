@@ -26,12 +26,9 @@ class TextUI {
 
         game = game.movePiece(game.cell(yPosOld.toInt, xPosOld.toInt), game.cell(yPosNew.toInt, xPosNew.toInt))
 
-        if (game.winnerColor.isDefined)
-          output.append("Winner: " + game.winnerColor + "\n")
-        else if (game.lmc == Color.white)
-          output.append("Next Player: Black\n")
-        else
-          output.append("Next Player: White\n")
+        if (game.winnerColor.isDefined) output.append("Winner: " + game.winnerColor + "\n")
+        else if (game.lmc == Color.white) output.append("Next Player: Black\n")
+        else output.append("Next Player: White\n")
 
         output.append(game.toString)
 
