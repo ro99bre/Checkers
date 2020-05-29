@@ -19,17 +19,22 @@ class TextUI {
 
       case "move" :: xPosOld :: yPosOld :: xPosNew :: yPosNew :: Nil =>
 
-        if (game != game.movePiece(game.cell(yPosOld.toInt,xPosOld.toInt), game.cell(yPosNew.toInt,xPosNew.toInt))) output.append("valid move\n")
-        else output.append("invalid move\n")
+        if (game != game.movePiece(game.cell(yPosOld.toInt, xPosOld.toInt), game.cell(yPosNew.toInt, xPosNew.toInt)))
+          output.append("valid move\n")
+        else
+          output.append("invalid move\n")
 
-        game = game.movePiece(game.cell(yPosOld.toInt,xPosOld.toInt), game.cell(yPosNew.toInt,xPosNew.toInt))
+        game = game.movePiece(game.cell(yPosOld.toInt, xPosOld.toInt), game.cell(yPosNew.toInt, xPosNew.toInt))
 
-        if (game.winnerColor.isDefined) output.append("Winner: " + game.winnerColor)
-        else if(game.lmc == Color.white) output.append("Next Player: Black")
-        else output.append("Next Player: White")
-
+        if (game.winnerColor.isDefined)
+          output.append("Winner: " + game.winnerColor + "\n")
+        else if (game.lmc == Color.white)
+          output.append("Next Player: Black\n")
+        else
+          output.append("Next Player: White\n")
 
         output.append(game.toString)
+
 
       case "exit" :: Nil =>
         System.exit(0)

@@ -18,7 +18,7 @@ class TextUISpec extends AnyWordSpec with Matchers {
       val game = Game(board, piecesBlack.pieces, piecesWhite.pieces, Color.white)
 
       val newRound = "Started new Round\n" + game.toString
-      val movedPiece = "invalid move\n" + "Next Player: Black" + game.toString
+      val movedPiece = "invalid move\n" + "Next Player: Black\n" + game.toString
 
       val helpText = "Possible Commands:\n" +
         "new Round:                 Starts a new Round of the game. The current scores will be lost.\n" +

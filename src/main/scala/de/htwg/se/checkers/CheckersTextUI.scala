@@ -10,6 +10,7 @@ object CheckersTextUI {
     var input: String = ""
 
     println("Started Checkers in TUI Mode")
+    println(tui.game.toString)
 
     do {
       print("Next move: ")
