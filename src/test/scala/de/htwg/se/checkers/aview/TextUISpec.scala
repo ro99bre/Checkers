@@ -2,47 +2,30 @@ package de.htwg.se.checkers.aview
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.checkers.model.{Board, Color, Game, Pieces}
+import de.htwg.se.checkers.model.Game
 import de.htwg.se.checkers.control.Controller
-//@TODO TextUISpec anpassen !!!
-/*class TextUISpec extends AnyWordSpec with Matchers {
 
-  "A TUI" when {
+class TextUISpec extends AnyWordSpec with Matchers {
 
-    "has a command" should {
+  "A TUI" should {
+    val controller = new Controller(new Game())
+    val tui = new TextUI(controller)
+    val game = new Game()
+    val movedGame = game.movePiece(game.cell(2,0), game.cell(3,1))
 
-      val tui = new TextUI(new Controller(new Game))
+    "create new game" in {
+      tui.tuiProcessor("new Round")
+      controller.game should be(game)
+    }
 
-      val newRound = "Started new Round\n" + game.toString
-      val movedPiece = "Next Player: Black\n" + game.toString
+    "move a piece" in {
+      tui.tuiProcessor("move 0,2 1,3")
+      controller.game should be(movedGame)
+    }
 
-      val helpText = "Possible Commands:\n" +
-        "new Round:                 Starts a new Round of the game. The current scores will be lost.\n" +
-        "move old<X,Y> new<X,Y>:    Moves the Piece from the old position to the new position specified\n" +
-        "exit:                      Exit the Game.\n"
-
-
-      "to start a new round" in {
-        val input = "new Round"
-        tui.tuiProcessor(input) should be(newRound)
-      }
-
-      "to move a piece" in {
-        val input = "move 1,2 3,4"
-        tui.tuiProcessor(input) should be(movedPiece)
-      }
-
-      "to print a help text" in {
-        val input = "help"
-        tui.tuiProcessor(input) should be(helpText)
-      }
-
-      /*
-      "to exit the game" in {
-        input = "exit"
-        tui.tuiProcessor(input) should be(newRound)
-      }
-      */
+    "not change on wrong input" in {
+      tui.tuiProcessor("ioe")
+      controller.game should be(movedGame)
     }
   }
-}*/
+}
