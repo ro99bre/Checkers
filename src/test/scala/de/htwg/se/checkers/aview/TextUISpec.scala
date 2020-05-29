@@ -40,13 +40,6 @@ class TextUISpec extends AnyWordSpec with Matchers {
         val input = "help"
         tui.tuiProcessor(input) should be(helpText)
       }
-
-      /*
-      "to exit the game" in {
-        input = "exit"
-        tui.tuiProcessor(input) should be(newRound)
-      }
-      */
     }
   }
 }

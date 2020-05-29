@@ -18,7 +18,5 @@ object CheckersTextUI {
 
       println(tui.tuiProcessor(input))
     } while (input != "exit")
-
   }
-
 }
