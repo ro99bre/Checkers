@@ -34,7 +34,6 @@ class TextUI {
 
 
       case "exit" :: Nil =>
-        System.exit(0)
 
       case _ =>
         output.append("Possible Commands:\n")
