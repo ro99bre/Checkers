@@ -1,6 +1,5 @@
 package de.htwg.se.checkers.aview
 
-import de.htwg.se.checkers.model._
 import de.htwg.se.checkers.util.Observer
 import de.htwg.se.checkers.control.Controller
 
