@@ -2,44 +2,30 @@ package de.htwg.se.checkers.aview
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.checkers.model.{Board, Color, Game, Pieces}
+import de.htwg.se.checkers.model.Game
+import de.htwg.se.checkers.control.Controller
 
 class TextUISpec extends AnyWordSpec with Matchers {
 
-  "A TUI" when {
+  "A TUI" should {
+    val controller = new Controller(new Game())
+    val tui = new TextUI(controller)
+    val game = new Game()
+    val movedGame = game.movePiece(game.cell(2,0), game.cell(3,1))
 
-    "has a command" should {
+    "create new game" in {
+      tui.tuiProcessor("new Round")
+      controller.game should be(game)
+    }
 
-      val tui = new TextUI
+    "move a piece" in {
+      tui.tuiProcessor("move 0,2 1,3")
+      controller.game should be(movedGame)
+    }
 
-      val piecesBlack = new Pieces(Color.black)
-      val piecesWhite = new Pieces(Color.white)
-      val board = new Board().createBoard(piecesBlack.pieces, piecesWhite.pieces)
-      val game = Game(board, piecesBlack.pieces, piecesWhite.pieces, Color.white)
-
-      val newRound = "Started new Round\n" + game.toString
-      val movedPiece = "invalid move\n" + "Next Player: Black\n" + game.toString
-
-      val helpText = "Possible Commands:\n" +
-        "new Round:                 Starts a new Round of the game. The current scores will be lost.\n" +
-        "move old<X,Y> new<X,Y>:    Moves the Piece from the old position to the new position specified\n" +
-        "exit:                      Exit the Game.\n"
-
-
-      "to start a new round" in {
-        val input = "new Round"
-        tui.tuiProcessor(input) should be(newRound)
-      }
-
-      "to move a piece" in {
-        val input = "move 1,2 3,4"
-        tui.tuiProcessor(input) should be(movedPiece)
-      }
-
-      "to print a help text" in {
-        val input = "help"
-        tui.tuiProcessor(input) should be(helpText)
-      }
+    "not change on wrong input" in {
+      tui.tuiProcessor("ioe")
+      controller.game should be(movedGame)
     }
   }
 }
