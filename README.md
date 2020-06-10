@@ -2,6 +2,7 @@ Checkers
 =====================================================
 ## About
 
+[![Build Status](https://travis-ci.org/ro99bre/Checkers.svg?branch=master)](https://travis-ci.org/ro99bre/Checkers)  [![Coverage Status](https://coveralls.io/repos/github/ro99bre/Checkers/badge.svg?branch=master)](https://coveralls.io/github/ro99bre/Checkers?branch=master)
 
 Checkers is an old board game, which is traditionally played on the dark squares of a chess board. 
 It's made for two players who oppose each other across the board. 
