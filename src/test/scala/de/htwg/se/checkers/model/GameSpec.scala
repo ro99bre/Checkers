@@ -54,10 +54,10 @@ class GameSpec extends AnyWordSpec with Matchers{
       updateGame(Cell(2,2,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(8)).
       updateGame(Cell(2,4,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(9)).
       updateGame(Cell(2,6,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(0)).
-      updateGame(Cell(4,2,Color.black, Some(piecesBlack.pieces(10))), Color.white).
+      updateGame(Cell(4,4,Color.black, Some(piecesBlack.pieces(10))), Color.white).
       updateGame(Cell(2,0,Color.black), Color.black)
-    val lostBlackPieces : Game = losingBlackPieces.updateGame(Cell(4,2,Color.black), Color.white,Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(10)).
-      updateGame(Cell(5,3,Color.black), Color.white).updateGame(Cell(3,1,Color.black,Some(Piece(Color.white, Queen.notQueen, Kicked.notKicked))), Color.white, None, None, Some(Color.white))
+    val lostBlackPieces : Game = losingBlackPieces.updateGame(Cell(4,4,Color.black), Color.white,Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(10)).
+      updateGame(Cell(5,3,Color.black), Color.white).updateGame(Cell(3,5,Color.black,Some(Piece(Color.white, Queen.notQueen, Kicked.notKicked))), Color.white, None, None, Some(Color.white))
     val losingBlocked : Game = game.updateGame(Cell(7,7,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(0)).
       updateGame(Cell(7,5,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(1)).
       updateGame(Cell(7,3,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(2)).
@@ -99,6 +99,20 @@ class GameSpec extends AnyWordSpec with Matchers{
       updateGame(Cell(4,2,Color.black, Some(Piece(Color.white, Queen.notQueen, Kicked.notKicked))), Color.white)
     val losingBlackBlocked : Game = queenBlackNotBlocked.updateGame(Cell(2,0,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.black,
       Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked)), Some(11))
+    val blockingBlackQueen : Game = game.updateGame(Cell(4,0,Color.black), Color.black).updateGame(Cell(7,1,Color.black), Color.black).
+      updateGame(Cell(7,3,Color.black), Color.black).updateGame(Cell(7,5,Color.black), Color.black).
+      updateGame(Cell(7,7,Color.black), Color.black).updateGame(Cell(6,0,Color.black), Color.black).
+      updateGame(Cell(6,2,Color.black), Color.black).updateGame(Cell(6,4,Color.black), Color.black).
+      updateGame(Cell(2,2,Color.black,Some(Piece(Color.black,Queen.isQueen,Kicked.notKicked))),Color.black,Some(Piece(Color.black,Queen.isQueen,Kicked.notKicked)),Some(0)).
+      updateGame(Cell(4,0,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.black).
+      updateGame(Cell(4,2,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.black).
+      updateGame(Cell(4,6,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.black).
+      updateGame(Cell(3,1,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.black).
+      updateGame(Cell(3,3,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.black).
+      updateGame(Cell(3,5,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.black).
+      updateGame(Cell(3,7,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.black)
+    val blockedBlackQueen : Game = blockingBlackQueen.updateGame(Cell(5,5,Color.black),Color.white).
+      updateGame(Cell(4,4,Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.notKicked))),Color.white,None,None,Some(Color.white))
     val crownWhite : Game = losingBlackBlocked.updateGame(Cell(3,1,Color.black), Color.black).updateGame(Cell(1,1,Color.black,Some(piecesWhite.pieces(0))), Color.black)
     val crownedWhite : Game = crownWhite.updateGame(Cell(1,1,Color.black),Color.white).updateGame(Cell(0,0,Color.black, Some(Piece(Color.white, Queen.isQueen, Kicked.notKicked))), Color.white, Some(Piece(Color.white, Queen.isQueen, Kicked.notKicked)), Some(0))
     val lostBlackBlocked : Game = losingBlackBlocked.updateGame(Cell(5,3,Color.black), Color.white).
@@ -162,7 +176,7 @@ class GameSpec extends AnyWordSpec with Matchers{
       losingWhitePieces.movePiece(losingWhitePieces.cell(4,0), losingWhitePieces.cell(6,2)) should be(lostWhitePieces)
     }
     "have winner when black doesn't have any pieces left" in {
-      losingBlackPieces.movePiece(losingBlackPieces.cell(5,3), losingBlackPieces.cell(3,1)) should be(lostBlackPieces)
+      losingBlackPieces.movePiece(losingBlackPieces.cell(5,3), losingBlackPieces.cell(3,5)) should be(lostBlackPieces)
     }
     "have a winner when white is blocked" in {
       losingBlocked.movePiece(losingBlocked.cell(3,1), losingBlocked.cell(4,2)) should be(lostBlocked)
@@ -175,6 +189,9 @@ class GameSpec extends AnyWordSpec with Matchers{
     }
     "have winner when black is blocked" in {
       losingBlackBlocked.movePiece(losingBlackBlocked.cell(5,3), losingBlackBlocked.cell(4,2)) should be(lostBlackBlocked)
+    }
+    "have winner when black queen is blocked" in {
+      blockingBlackQueen.movePiece(blockingBlackQueen.cell(5,5), blockingBlackQueen.cell(4,4)) should be(blockedBlackQueen)
     }
     "not have winner if black queen is not blocked" in {
       queenBlackNotBlocked.movePiece(queenBlackNotBlocked.cell(5,3), queenBlackNotBlocked.cell(4,2)) should be(queenBlackNotBlockedMoved)
