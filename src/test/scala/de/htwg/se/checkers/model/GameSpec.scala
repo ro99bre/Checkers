@@ -17,6 +17,11 @@ class GameSpec extends AnyWordSpec with Matchers{
       updateGame(Cell(4,2,Color.black), Color.white).updateGame(Cell(2,0,Color.black,Some(piecesWhite.pieces(0))), Color.white)
     val kicked : Game = movedWhite.updateGame(Cell(4,2,Color.black),Color.black,Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(0)).
       updateGame(Cell(3,1,Color.black), Color.black).updateGame(Cell(5,3,Color.black,Some(piecesBlack.pieces(0))), Color.black)
+    val kickWhite : Game = game.updateGame(Cell(3,1,Color.black,Some(piecesWhite.pieces(0))),Color.white).
+      updateGame(Cell(5,1,Color.black),Color.white)
+    val kickedWhite : Game = kickWhite.updateGame(Cell(2,2,Color.black),Color.white).
+      updateGame(Cell(4,0,Color.black,Some(Piece(Color.black,Queen.notQueen,Kicked.notKicked))),Color.white).
+      updateGame(Cell(3,1,Color.black),Color.black,Some(Piece(Color.white,Queen.notQueen,Kicked.isKicked)),Some(0))
     val crown : Game = kicked.updateGame(Cell(7,3,Color.black),Color.white).updateGame(Cell(5,5,Color.black),Color.white).
       updateGame(Cell(6,4,Color.black,Some(piecesBlack.pieces(0))), Color.white)
     val crowned : Game = crown.updateGame(Cell(6,4,Color.black), Color.black).updateGame(Cell(7,3,Color.black,
@@ -147,6 +152,7 @@ class GameSpec extends AnyWordSpec with Matchers{
     }
     "be able to kick a white piece" in {
       movedWhite.movePiece(movedWhite.cell(3,1), movedWhite.cell(5,3)) should be(kicked)
+      kickWhite.movePiece(kickWhite.cell(2,2), kickWhite.cell(4,0)) should be(kickedWhite)
     }
     "be able to kick a black piece" in {
       kickBlack.movePiece(kickBlack.cell(4,2), kickBlack.cell(2,0)) should be(kickedBlack)
