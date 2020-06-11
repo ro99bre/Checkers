@@ -27,5 +27,9 @@ class TextUISpec extends AnyWordSpec with Matchers {
       tui.tuiProcessor("ioe")
       controller.game should be(movedGame)
     }
+
+    "end game on exit" in {
+      tui.tuiProcessor("exit")
+    }
   }
 }
