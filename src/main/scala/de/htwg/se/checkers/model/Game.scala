@@ -13,6 +13,13 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
+  def undoRedoMove(s:Cell, d:Cell): Game = {
+    var temp: Board = board.copy(board.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, s.piece)))
+    temp = temp.copy(temp.cells.replaceCell(s.y, s.x, Cell(s.y, s.x, s.color)))
+    Game(temp,pb, pw,s.piece.get.color)
+    //@TODO putting kicked piece back, removing queen, winnercolor, lastMoveColor after undo?
+  }
+
   //updates cells after piece has been moved (and kicked), returns new board
   private def updatePiece(s:Cell, d:Cell): Board = {//s=start d=destination
     var piece : Piece = s.piece.get

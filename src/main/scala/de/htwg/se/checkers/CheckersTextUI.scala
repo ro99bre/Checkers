@@ -6,15 +6,15 @@ import de.htwg.se.checkers.control.Controller
 
 object CheckersTextUI {
 
-  val controller = new Controller(new Game())
-  val tui = new TextUI(controller)
-  controller.notifyObservers()
-
   def main(args: Array[String]): Unit = {
 
     println("Started Checkers in TUI Mode")
 
-    var input: String = args(0)
+    val controller = new Controller(new Game())
+    val tui = new TextUI(controller)
+    controller.notifyObservers()
+    var input: String = ""
+    if (args.length > 0) input = args(0)
     if(!input.isEmpty) {
       if (controller.game.winnerColor.isDefined) println("Winner: " + controller.game.winnerColor.get)
       else if (controller.game.lmc == Color.white) print("Next Player: Black\nNext move: ")

@@ -28,4 +28,4 @@ class ControllerSpec extends AnyWordSpec with Matchers{
       }
     }
   }
-}
+} //@TODO Command, Undo, Redo... testen

@@ -16,6 +16,10 @@ class TextUI(controller: Controller) extends Observer {
       case "move" :: xPosOld :: yPosOld :: xPosNew :: yPosNew :: Nil =>
         controller.move(xPosOld.toInt, yPosOld.toInt, xPosNew.toInt, yPosNew.toInt)
 
+      case "undo" :: Nil => controller.undo()
+
+      case "redo" :: Nil => controller.redo()
+
       case "exit" :: Nil =>
 
       case _ => println("\nPossible Commands:\nnew Round:\t\t\t\t\tStarts a new Round of the game. " +
