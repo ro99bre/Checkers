@@ -26,6 +26,18 @@ class ControllerSpec extends AnyWordSpec with Matchers{
         controller.game.cell(2,0).piece.isDefined should be(false)
         controller.game.cell(3,1).piece.isDefined should be(true)
       }
+      "notify Observer after undo of move" in {
+        controller.undo()
+        observer.updated should be(true)
+        controller.game.cell(2,0).piece.isDefined should be(true)
+        controller.game.cell(3,1).piece.isDefined should be(false)
+      }
+      "notify Observer after redo of move" in {
+        controller.redo()
+        observer.updated should be(true)
+        controller.game.cell(2,0).piece.isDefined should be(false)
+        controller.game.cell(3,1).piece.isDefined should be(true)
+      }
     }
   }
 } //@TODO Command, Undo, Redo... testen

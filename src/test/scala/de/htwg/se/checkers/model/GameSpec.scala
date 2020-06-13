@@ -154,14 +154,26 @@ class GameSpec extends AnyWordSpec with Matchers{
       movedWhite.movePiece(movedWhite.cell(3,1), movedWhite.cell(5,3)) should be(kicked)
       kickWhite.movePiece(kickWhite.cell(2,2), kickWhite.cell(4,0)) should be(kickedWhite)
     }
+    "be able to undo kicking of white piece" in {
+      kickedWhite.undoMove(kickedWhite.cell(4,0), kickedWhite.cell(2,2)) should be(kickWhite)
+    }
     "be able to kick a black piece" in {
       kickBlack.movePiece(kickBlack.cell(4,2), kickBlack.cell(2,0)) should be(kickedBlack)
+    }
+    "be able do undo kicking of black piece" in {
+      kickedBlack.undoMove(kickedBlack.cell(2,0), kickedBlack.cell(4,2)) should be(kickBlack)
     }
     "be able to crown a black piece" in {
       crown.movePiece(crown.cell(6,4), crown.cell(7,3)) should be(crowned)
     }
+    "be able to undo crowning of a black piece" in {
+      crowned.undoMove(crowned.cell(7,3), crowned.cell(6,4)) should be(crown)
+    }
     "be able to crown a white piece" in {
       crownWhite.movePiece(crownWhite.cell(1,1), crownWhite.cell(0,0)) should be(crownedWhite)
+    }
+    "be able to undo crowning of a white piece" in {
+      crownedWhite.undoMove(crownedWhite.cell(0,0), crownedWhite.cell(1,1)) should be(crownWhite)
     }
     "be able to move a black queen" in {
       crownedLMCWhite.movePiece(crownedLMCWhite.cell(7,3), crownedLMCWhite.cell(6,4)) should be(queenMoved)

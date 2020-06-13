@@ -13,11 +13,60 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
-  def undoRedoMove(s:Cell, d:Cell): Game = {
+  def undoMove(s:Cell, d:Cell): Game = {
+    var opponentColor = Color.white
+    var pbTemp = pb
+    var pwTemp = pw
+    var index: Int = 0
+    s.piece.get.color match {
+      case Color.black => opponentColor = Color.white
+      case Color.white => opponentColor = Color.black
+    }
+
     var temp: Board = board.copy(board.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, s.piece)))
     temp = temp.copy(temp.cells.replaceCell(s.y, s.x, Cell(s.y, s.x, s.color)))
-    Game(temp,pb, pw,s.piece.get.color)
-    //@TODO putting kicked piece back, removing queen, winnercolor, lastMoveColor after undo?
+    if(middleCellCalc(s,d).isDefined) {
+      val middleCell : Cell= middleCellCalc(s,d).get
+
+      //method for unkicking
+      for (i <- 11 to (0,-1)) {
+        opponentColor match {
+          case Color.black => if(pb(i).kicked == Kicked.isKicked) index=i;pbTemp=deKickPiece(pb,index)
+            temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some(pbTemp(index)))))
+            return Game(temp,pbTemp,pwTemp,Color.black)
+          case Color.white => if(pw(i).kicked == Kicked.isKicked) index=i;pwTemp=deKickPiece(pw,index)
+            temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some(pwTemp(index)))))
+            return Game(temp,pbTemp,pwTemp,Color.white)
+        }
+      }
+
+      //color of opponent
+      //loop over pieces, return index of kicked piece (first or last kicked piece?)-> loop backwards
+      //update opponent vector (not kicked) deKick -> save vector or return
+      //put piece on board
+      //temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some())))
+    }
+    //queenDestinationCheck-ish(s instead d), decrown
+
+    //extra method? what if just standing at other end and queen gets removed then?
+    (s.piece.get.color, s.y) match {
+      case (Color.black, 7) => index=pb.indexOf(s.piece.get); pbTemp=deCrown(pbTemp,index)
+        temp = temp.copy(temp.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, Some(pbTemp(index)))))
+        return Game(temp,pbTemp,pwTemp,Color.white)
+      case (Color.white, 0) => index=pw.indexOf(s.piece.get); pwTemp=deCrown(pwTemp,index)
+        temp = temp.copy(temp.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, Some(pwTemp(index)))))
+        return Game(temp,pbTemp,pwTemp,Color.black)
+      case _ =>
+    }
+
+    opponentColor match {
+      case Color.black => Game(temp,pbTemp,pwTemp,Color.black)
+      case Color.white => Game(temp,pbTemp,pwTemp,Color.white)
+    }
+    //@TODO winnercolor? clean up code
+    //when diff 2, putting opponent piece, vector update (not kicked) kicked piece queen or not?
+    //queen??? at end?-> remove crown
+    //decrown/dekick defs
   }
 
   //updates cells after piece has been moved (and kicked), returns new board
@@ -86,6 +135,9 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   private def crown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color,
     Queen.isQueen, pieces(index).kicked))
 
+  private def deCrown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color,
+    Queen.notQueen, pieces(index).kicked))
+
   private def moveBlackRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
     if (d.y - 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
     else if (d.y - 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) return kickPieceCheck(s, d)
@@ -112,6 +164,8 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   }
 
   private def kickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.isKicked))
+
+  private def deKickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.notKicked))
 
   //calculates a piece to be killed in case of jumping over it
   private def middleCellCalc(s:Cell, d:Cell): Option[Cell] = {

@@ -17,10 +17,6 @@ class Controller(var game:Game) extends Observable {
     notifyObservers()
   }
 
-  def undoMove(sx:Int, sy:Int, dx:Int, dy:Int): Unit = {
-    game = game.undoRedoMove(game.cell(dy,dx), game.cell(sy,sx))
-  }
-
   def undo() : Unit = {
     undoManager.undoStep()
     notifyObservers()

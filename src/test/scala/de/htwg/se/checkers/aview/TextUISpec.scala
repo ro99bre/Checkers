@@ -23,6 +23,22 @@ class TextUISpec extends AnyWordSpec with Matchers {
       controller.game should be(movedGame)
     }
 
+    "undo moving a piece" in {
+      tui.tuiProcessor("move 0,2 1,3")
+      controller.game should be(movedGame)
+      tui.tuiProcessor("undo")
+      controller.game should be(game)
+    }
+
+    "redo moving a piece" in {
+      tui.tuiProcessor("move 0,2 1,3")
+      controller.game should be(movedGame)
+      tui.tuiProcessor("undo")
+      controller.game should be(game)
+      tui.tuiProcessor("redo")
+      controller.game should be(movedGame)
+    }
+
     "not change on wrong input" in {
       tui.tuiProcessor("ioe")
       controller.game should be(movedGame)
