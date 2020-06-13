@@ -15,58 +15,18 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   def undoMove(s:Cell, d:Cell): Game = {
     var opponentColor = Color.white
-    var pbTemp = pb
-    var pwTemp = pw
-    var index: Int = 0
     s.piece.get.color match {
       case Color.black => opponentColor = Color.white
       case Color.white => opponentColor = Color.black
     }
-
     var temp: Board = board.copy(board.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, s.piece)))
     temp = temp.copy(temp.cells.replaceCell(s.y, s.x, Cell(s.y, s.x, s.color)))
-    if(middleCellCalc(s,d).isDefined) {
-      val middleCell : Cell= middleCellCalc(s,d).get
-
-      //method for unkicking
-      for (i <- 11 to (0,-1)) {
-        opponentColor match {
-          case Color.black => if(pb(i).kicked == Kicked.isKicked) index=i;pbTemp=deKickPiece(pb,index)
-            temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some(pbTemp(index)))))
-            return Game(temp,pbTemp,pwTemp,Color.black)
-          case Color.white => if(pw(i).kicked == Kicked.isKicked) index=i;pwTemp=deKickPiece(pw,index)
-            temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some(pwTemp(index)))))
-            return Game(temp,pbTemp,pwTemp,Color.white)
-        }
-      }
-
-      //color of opponent
-      //loop over pieces, return index of kicked piece (first or last kicked piece?)-> loop backwards
-      //update opponent vector (not kicked) deKick -> save vector or return
-      //put piece on board
-      //temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some())))
+    if (deKickPieceCheck(s,d,temp,opponentColor).isDefined) deKickPieceCheck(s,d,temp,opponentColor).get
+    else if (deQueenDestinationCheck(s,d,temp).isDefined) deQueenDestinationCheck(s,d,temp).get
+    else opponentColor match {
+      case Color.black => Game(temp,pb,pw,Color.black)
+      case Color.white => Game(temp,pb,pw,Color.white)
     }
-    //queenDestinationCheck-ish(s instead d), decrown
-
-    //extra method? what if just standing at other end and queen gets removed then?
-    (s.piece.get.color, s.y) match {
-      case (Color.black, 7) => index=pb.indexOf(s.piece.get); pbTemp=deCrown(pbTemp,index)
-        temp = temp.copy(temp.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, Some(pbTemp(index)))))
-        return Game(temp,pbTemp,pwTemp,Color.white)
-      case (Color.white, 0) => index=pw.indexOf(s.piece.get); pwTemp=deCrown(pwTemp,index)
-        temp = temp.copy(temp.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, Some(pwTemp(index)))))
-        return Game(temp,pbTemp,pwTemp,Color.black)
-      case _ =>
-    }
-
-    opponentColor match {
-      case Color.black => Game(temp,pbTemp,pwTemp,Color.black)
-      case Color.white => Game(temp,pbTemp,pwTemp,Color.white)
-    }
-    //@TODO winnercolor? clean up code
-    //when diff 2, putting opponent piece, vector update (not kicked) kicked piece queen or not?
-    //queen??? at end?-> remove crown
-    //decrown/dekick defs
   }
 
   //updates cells after piece has been moved (and kicked), returns new board
@@ -132,6 +92,22 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
+  private def deQueenDestinationCheck(s:Cell, d:Cell, tempboard:Board) : Option[Game] = {
+    var pbTemp = pb
+    var pwTemp = pw
+    var index: Int = 0
+    var temp = tempboard
+    (s.piece.get.color, s.y) match {
+      case (Color.black, 7) => index = pb.indexOf(s.piece.get); pbTemp=deCrown(pbTemp,index)
+        temp = temp.copy(temp.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, Some(pbTemp(index)))))
+        Some(Game(temp,pbTemp,pwTemp,Color.white))
+      case (Color.white, 0) => index = pw.indexOf(s.piece.get); pwTemp=deCrown(pwTemp,index)
+        temp = temp.copy(temp.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, Some(pwTemp(index)))))
+        Some(Game(temp,pbTemp,pwTemp,Color.black))
+      case _ => None
+    }
+  }
+
   private def crown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color,
     Queen.isQueen, pieces(index).kicked))
 
@@ -161,6 +137,27 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
       case Color.black => kickPiece(pb, pb.indexOf(middlePiece))
       case Color.white => kickPiece(pw, pw.indexOf(middlePiece))
     }
+  }
+
+  private def deKickPieceCheck(s:Cell, d:Cell, tempboard:Board, opponentColor:Color.Value) : Option[Game] = {
+    var pbTemp = pb
+    var pwTemp = pw
+    var index: Int = 0
+    var temp = tempboard
+    if(middleCellCalc(s,d).isDefined) {
+      val middleCell : Cell= middleCellCalc(s,d).get
+      for (i <- 11 to (0,-1)) {
+        opponentColor match {
+          case Color.black => if(pb(i).kicked == Kicked.isKicked) index=i;pbTemp=deKickPiece(pb,index)
+            temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some(pbTemp(index)))))
+            return Some(Game(temp,pbTemp,pwTemp,Color.black))
+          case Color.white => if(pw(i).kicked == Kicked.isKicked) index=i;pwTemp=deKickPiece(pw,index)
+            temp = temp.copy(temp.cells.replaceCell(middleCell.y, middleCell.x, Cell(middleCell.y, middleCell.x, middleCell.color, Some(pwTemp(index)))))
+            return Some(Game(temp,pbTemp,pwTemp,Color.white))
+        }
+      }
+    }
+    None
   }
 
   private def kickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.isKicked))
