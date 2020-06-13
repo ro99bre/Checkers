@@ -135,8 +135,14 @@ class GameSpec extends AnyWordSpec with Matchers{
     "be able to move a black Piece" in {
       game.movePiece(game.cell(2,0), game.cell(3,1)) should be(movedBlack)
     }
+    "be able to undo move of black piece" in {
+      movedBlack.undoMove(movedBlack.cell(3,1), movedBlack.cell(2,0)) should be(game)
+    }
     "be able to move a white Piece" in {
       movedBlack.movePiece(movedBlack.cell(5,3), movedBlack.cell(4,2)) should be(movedWhite)
+    }
+    "be able to undo move of white piece" in {
+      movedWhite.undoMove(movedWhite.cell(4,2), movedWhite.cell(5,3)) should be(movedBlack)
     }
     "not make invalid move with black Piece" in {
       game.movePiece(game.cell(2,0), game.cell(4,6)) should be(game)
