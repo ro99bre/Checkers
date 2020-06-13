@@ -20,6 +20,12 @@ class ControllerSpec extends AnyWordSpec with Matchers{
         controller.createGame()
         observer.updated should be(true)
       }
+      "handle undo/redo correctly on empty undo-stack" in {
+        controller.undo()
+        controller.game should be(game)
+        controller.redo()
+        controller.game should be(game)
+      }
       "notify Observer after moving a piece" in {
         controller.move(0,2,1,3)
         observer.updated should be(true)
@@ -40,4 +46,4 @@ class ControllerSpec extends AnyWordSpec with Matchers{
       }
     }
   }
-} //@TODO Command, Undo, Redo... testen
+}

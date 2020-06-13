@@ -18,6 +18,16 @@ class TextUISpec extends AnyWordSpec with Matchers {
       controller.game should be(game)
     }
 
+    "not change on undo when game is new" in {
+      tui.tuiProcessor("undo")
+      controller.game should be(game)
+    }
+
+    "not change on redo when game is new" in {
+      tui.tuiProcessor("redo")
+      controller.game should be(game)
+    }
+
     "move a piece" in {
       tui.tuiProcessor("move 0,2 1,3")
       controller.game should be(movedGame)
