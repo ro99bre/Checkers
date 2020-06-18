@@ -23,10 +23,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     temp = temp.copy(temp.cells.replaceCell(s.y, s.x, Cell(s.y, s.x, s.color)))
     if (deKickPieceCheck(s,d,temp,opponentColor).isDefined) deKickPieceCheck(s,d,temp,opponentColor).get
     else if (deQueenDestinationCheck(s,d,temp).isDefined) deQueenDestinationCheck(s,d,temp).get
-    else opponentColor match {
-      case Color.black => Game(temp,pb,pw,Color.black)
-      case Color.white => Game(temp,pb,pw,Color.white)
-    }
+    else Game(temp,pb,pw,opponentColor)
   }
 
   //updates cells after piece has been moved (and kicked), returns new board
