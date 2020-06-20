@@ -18,6 +18,8 @@ import scalafx.scene.paint.Color._
 import scalafx.scene.shape.Rectangle
 import scalafx.scene.text.{FontWeight, Text}
 
+import scala.io.Source
+
 class GUI(controller: Controller) extends JFXApp with Observer {
 
   controller.add(this)
@@ -47,9 +49,6 @@ class GUI(controller: Controller) extends JFXApp with Observer {
   //Button on every page (left side)
   //Return/Back button
 
-  //Buttons/Texts on Game-Page
-  //New Round/Game button
-
   def initialize(): Unit = {
     stage.scene = new Scene {
       val pane1 : BorderPane = new BorderPane {
@@ -73,7 +72,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
         }
         center = new VBox {
           alignment = Pos.Center
-          children = List(playButton, createExitButton(85))
+          children = List(playButton, rulesButton(85), createExitButton(85))
         }
       }
       root = pane1
@@ -113,10 +112,44 @@ class GUI(controller: Controller) extends JFXApp with Observer {
       boardPane.add(playerWinnerPane,8,0)
       boardPane.add(kickedBlackPane,8,1)
       boardPane.add(kickedWhitePane,8,2)
+      boardPane.add(undoButton(recHW),8,3)
+      boardPane.add(redoButton(recHW),8,4)
+      boardPane.add(newRoundButton(recHW),8,5)
+      boardPane.add(backButton(recHW),8,6)
       boardPane.add(createExitButton(recHW),8,7)
       boardPane.alignment = Center
       root = boardPane
     }
+  }
+
+  def showRules(): Unit = {
+    val hw = stage.getHeight-50
+    stage.scene = new Scene{
+      val rect : Rectangle = new Rectangle{
+        width = hw-(2*(hw/8))
+        height = hw-(2*(hw/8))
+        fill = White
+      }
+      val stackPaneRules = new StackPane()
+      val gridPane = new GridPane()
+      //stackPaneRules.getChildren.addAll(rect, new Text(Source.fromFile("checkersRules.txt").mkString) {style = "-fx-font-size: " + stage.getHeight/50 + "pt;"})
+      stackPaneRules.getChildren.addAll(rect,rulesFromTXT())
+      gridPane.add(stackPaneRules,0,0)
+      gridPane.add(backButton(hw/8),1,1)
+      gridPane.add(createExitButton(hw/8),1,2)
+      gridPane.alignment = Center
+      gridPane.style = "-fx-background-color: White"
+      root = gridPane
+    }
+  }
+
+  def rulesFromTXT(): Node = {
+    val rules: Node = new Text {
+      text = Source.fromFile("checkersRules.txt").mkString
+      style = "-fx-font-size: " + stage.getHeight/50 + "pt;" //+ "-fx-padding:50px;"
+    }
+    //close source???
+    rules
   }
 
   def createSquareButton(recHW:Double, xr:Integer, yr:Integer): Button = {
@@ -212,6 +245,71 @@ class GUI(controller: Controller) extends JFXApp with Observer {
       style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
     }
     kickedWhite
+  }
+
+  def undoButton(recHW:Double): Button = {
+    val undoButton = new Button("Undo Move") {
+      var undoButtonStyle = "-fx-background-color: white;" +
+        "-fx-font-size: " + stage.getHeight/29 + "pt;" +
+        "-fx-padding:5;"
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => controller.undo()
+      style <== when(hover) choose undoButtonStyle + "-fx-border-color: black;" otherwise undoButtonStyle
+    }
+    undoButton
+  }
+
+  def redoButton(recHW:Double): Button = {
+    val redoButton = new Button("Redo Move") {
+      var redoButtonStyle = "-fx-background-color: white;" +
+        "-fx-font-size: " + stage.getHeight/29 + "pt;" +
+        "-fx-padding:5;"
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => controller.redo()
+      style <== when(hover) choose redoButtonStyle + "-fx-border-color: black;" otherwise redoButtonStyle
+    }
+    redoButton
+  }
+
+  def newRoundButton(recHW:Double): Button = {
+    val newRoundButton = new Button("New Round") {
+      var newRoundButtonStyle = "-fx-background-color: white;" +
+        "-fx-font-size: " + stage.getHeight/29 + "pt;" +
+        "-fx-padding:5;"
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => controller.createGame()
+      style <== when(hover) choose newRoundButtonStyle + "-fx-border-color: black;" otherwise newRoundButtonStyle
+    }
+    newRoundButton
+  }
+
+  def backButton(recHW:Double): Button = {
+    val backButton = new Button("Go Back") {
+      var backButtonStyle = "-fx-background-color: white;" +
+        "-fx-font-size: " + stage.getHeight/29 + "pt;" +
+        "-fx-padding:5;"
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => initialize()
+      style <== when(hover) choose backButtonStyle + "-fx-border-color: black;" otherwise backButtonStyle
+    }
+    backButton
+  }
+
+  def rulesButton(recHW:Double): Button = {
+    val rulesButton = new Button("Show Rules") {
+      var rulesButtonStyle = "-fx-background-color: white;" +
+        "-fx-font-size: " + stage.getHeight/29 + "pt;" +
+        "-fx-padding:5;"
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => showRules()
+      style <== when(hover) choose rulesButtonStyle + "-fx-border-color: black;" otherwise rulesButtonStyle
+    }
+    rulesButton
   }
 
   def createExitButton(recHW:Double): Button = {
