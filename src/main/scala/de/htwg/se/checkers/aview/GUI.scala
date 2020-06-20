@@ -34,8 +34,8 @@ class GUI(controller: Controller) extends JFXApp with Observer {
     height = h
   }
 
-  //initialize()
-  drawBoard()
+  initialize()
+  //drawBoard()
 
   //@TODO: turn board?, following buttons/pages
   //Initial Page Buttons:
@@ -48,15 +48,12 @@ class GUI(controller: Controller) extends JFXApp with Observer {
   //Return/Back button
 
   //Buttons/Texts on Game-Page
-  //Winner: No Winner yet
-  //Next Player:
-  //kickedPiecesCounter
   //New Round/Game button
-  //Exit Button
 
   def initialize(): Unit = {
     stage.scene = new Scene {
-      val pane1 = new BorderPane {
+      val pane1 : BorderPane = new BorderPane {
+        style = "-fx-background-color: White"
         val title1: Node = new Text {
           text = "Checkers"
           style = "-fx-font-size: 38pt"
@@ -65,25 +62,85 @@ class GUI(controller: Controller) extends JFXApp with Observer {
           prefHeight = 200
           center = title1
         }
-        val playButton = new Button {
-          text = "Play"
-          val playButtonStyle = "-fx-font-size: 25pt" +
-            "-fx-background-radius: 5em;" +
+        val playButton : Button = new Button("Play") {
+          val buttonStyle : String = "-fx-font-size: " + stage.getHeight/29 + "pt;" +
             "-fx-padding:5;" +
-            "-fx-background-color: transparent;" +
-            "-fx-border-color: transparent;"
-          style <== when(hover) choose playButtonStyle + "-fx-border-color: black;" otherwise playButtonStyle
+            "-fx-background-color: white;"
+          style <== when(hover) choose buttonStyle + "-fx-border-color: black;" otherwise buttonStyle
           prefHeight = 85
-          prefWidth = 200
+          prefWidth = (stage.getWidth/4)-10
           onAction = _ => drawBoard()
         }
         center = new VBox {
           alignment = Pos.Center
-          children = playButton
+          children = List(playButton, createExitButton(85))
         }
       }
       root = pane1
     }
+  }
+
+  def drawBoard(): Unit = {
+    val recHW = (stage.getHeight-50)/8
+    stage.scene = new Scene {
+      val boardPane = new GridPane()
+      for (yr <- 0 until 8;
+           xr <- 0 until 8) {
+
+        var square = new StackPane()
+        square.setPrefSize(recHW,recHW)
+
+        if (controller.game.board.cells.cell(yr,xr).piece.isDefined) {
+          (controller.game.board.cells.cell(yr,xr).piece.get.color, controller.game.board.cells.cell(yr,xr).piece.get.queen) match {
+            case (Color.black, Queen.notQueen) => square.getChildren.addAll(createCell(recHW,xr,yr), createBlackPiece(), createSquareButton(recHW,xr,yr))
+            case (Color.white, Queen.notQueen) => square.getChildren.addAll(createCell(recHW,xr,yr), createWhitePiece(), createSquareButton(recHW,xr,yr))
+            case (Color.black, Queen.isQueen) => square.getChildren.addAll(createCell(recHW,xr,yr), createBlackPiece(), createQueen(), createSquareButton(recHW,xr,yr))
+            case (Color.white, Queen.isQueen) => square.getChildren.addAll(createCell(recHW,xr,yr), createWhitePiece(), createQueen(), createSquareButton(recHW,xr,yr))
+          }
+        } else square.getChildren.addAll(createCell(recHW,xr,yr), createSquareButton(recHW,xr,yr))
+
+        boardPane.add(square,xr,7 - yr)
+      }
+      boardPane.style = "-fx-background-color: White"
+      val playerWinnerPane = new StackPane()
+      playerWinnerPane.getChildren.add(textBGRectangle(recHW))
+      val kickedBlackPane = new StackPane()
+      kickedBlackPane.getChildren.addAll(textBGRectangle(recHW),kickedPiecesBlack())
+      val kickedWhitePane = new StackPane()
+      kickedWhitePane.getChildren.addAll(textBGRectangle(recHW),kickedPiecesWhite())
+      if (controller.game.winnerColor.isEmpty) playerWinnerPane.getChildren.add(nextPlayer())
+      else playerWinnerPane.getChildren.add(nextPlayer())
+      boardPane.add(playerWinnerPane,8,0)
+      boardPane.add(kickedBlackPane,8,1)
+      boardPane.add(kickedWhitePane,8,2)
+      boardPane.add(createExitButton(recHW),8,7)
+      boardPane.alignment = Center
+      root = boardPane
+    }
+  }
+
+  def createSquareButton(recHW:Double, xr:Integer, yr:Integer): Button = {
+    val squareButton = new Button {
+      var squareButtonStyle = "-fx-background-color: transparent;"
+      prefHeight = recHW
+      prefWidth = recHW
+      onAction = _ => click(xr,yr)
+      if (coordinatesSet && sx == xr && sy == yr) squareButtonStyle += "-fx-border-color: blue;" + "-fx-border-width: 4"
+      style <== when(hover) choose "-fx-background-color: blue;" otherwise squareButtonStyle
+    }
+    squareButton
+  }
+
+  def createCell(recHW:Double, xr:Integer, yr:Integer): Rectangle = {
+    var cell : Rectangle = new Rectangle {
+      width = recHW
+      height = recHW
+      x = xr.toDouble
+      y = yr.toDouble
+      if (controller.game.board.cells.cell(yr,xr).color == Color.white) fill = White
+      else fill = Black
+    }
+    cell
   }
 
   def createBlackPiece(): Circle = {
@@ -110,49 +167,64 @@ class GUI(controller: Controller) extends JFXApp with Observer {
     queen
   }
 
-  def drawBoard(): Unit = {
-    val recHW = (stage.getHeight-50)/8
-    stage.scene = new Scene {
-      val boardPane = new GridPane()
-      for (yr <- 0 until 8;//(yr <- 7 to (0,-1);
-           xr <- 0 until 8) {
-
-        var square = new StackPane()
-        square.setPrefSize(recHW,recHW)
-
-        var squareButton = new Button {
-          var squareButtonStyle = "-fx-background-color: transparent;"
-          prefHeight = recHW
-          prefWidth = recHW
-          onAction = _ => click(xr,yr)
-          if (coordinatesSet && sx == xr && sy == yr) squareButtonStyle += "-fx-border-color: blue;" + "-fx-border-width: 4"
-          style <== when(hover) choose "-fx-background-color: blue;" otherwise squareButtonStyle
-        }
-
-        var cell : Rectangle = new Rectangle {
-          width = recHW
-          height = recHW
-          x = xr
-          y = yr
-          if (controller.game.board.cells.cell(yr,xr).color == Color.white) fill = White
-          else fill = Black//Red
-          }
-
-        if (controller.game.board.cells.cell(yr,xr).piece.isDefined) {
-          (controller.game.board.cells.cell(yr,xr).piece.get.color, controller.game.board.cells.cell(yr,xr).piece.get.queen) match {
-            case (Color.black, Queen.notQueen) => square.getChildren.addAll(cell, createBlackPiece(), squareButton)
-            case (Color.white, Queen.notQueen) => square.getChildren.addAll(cell, createWhitePiece(), squareButton)
-            case (Color.black, Queen.isQueen) => square.getChildren.addAll(cell, createBlackPiece(), createQueen(), squareButton)
-            case (Color.white, Queen.isQueen) => square.getChildren.addAll(cell, createWhitePiece(), createQueen(), squareButton)
-            case (_,_) => square.getChildren.addAll(cell, squareButton)
-          }
-        } else square.getChildren.addAll(cell, squareButton)
-
-        boardPane.add(square,xr,yr)
-        boardPane.alignment = Center
+  def nextPlayer(): Node = {
+    val nextPlayer: Node = new Text {//text in rectangle stackpane -> board doesn't move
+      controller.game.lmc match {
+        case Color.black => text = "Next Player: White"
+        case Color.white => text = "Next Player: Red"
       }
-      root = boardPane
+      style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
     }
+    nextPlayer
+  }
+
+  def textBGRectangle(recHW:Double) : Rectangle = {
+    val rect : Rectangle = new Rectangle{
+      width = (stage.getWidth/4)-10
+      height = recHW
+      fill = White
+    }
+    rect
+  }
+
+  def winner(): Node = {
+    val winner: Node = new Text {
+      controller.game.winnerColor.get match {
+        case Color.black => text = "Winner: Red"
+        case Color.white => text = "Winner: White"
+      }
+      style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
+    }
+    winner
+  }
+
+  def kickedPiecesBlack() : Node = {
+    val kickedBlack: Node = new Text {
+      text = "Dead Black Pieces: " + controller.game.countKickedPieces()._1
+      style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
+    }
+    kickedBlack
+  }
+
+  def kickedPiecesWhite() : Node = {
+    val kickedWhite: Node = new Text {
+      text = "Dead White Pieces: " + controller.game.countKickedPieces()._2
+      style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
+    }
+    kickedWhite
+  }
+
+  def createExitButton(recHW:Double): Button = {
+    val exitButton = new Button("Exit") {
+      var exitButtonStyle = "-fx-background-color: white;" +
+        "-fx-font-size: " + stage.getHeight/29 + "pt;" +
+        "-fx-padding:5;"
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => exit()
+      style <== when(hover) choose exitButtonStyle + "-fx-border-color: black;" otherwise exitButtonStyle
+    }
+    exitButton
   }
 
   def click(x:Integer, y:Integer): Unit = {
@@ -169,7 +241,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
   }
 
   def exit(): Unit = {
-    CheckersTextUI.main(Array[String]("exit"))
+    System.exit(0)
   }
 
   override def update(): Unit = drawBoard()
