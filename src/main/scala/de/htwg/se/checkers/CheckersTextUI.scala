@@ -1,6 +1,6 @@
 package de.htwg.se.checkers
 
-import de.htwg.se.checkers.aview.TextUI
+import de.htwg.se.checkers.aview.{GUI, TextUI}
 import de.htwg.se.checkers.model._
 import de.htwg.se.checkers.control.Controller
 
@@ -12,6 +12,8 @@ object CheckersTextUI {
 
     val controller = new Controller(new Game())
     val tui = new TextUI(controller)
+    val gui = new GUI(controller)
+    gui.main(Array())
     controller.notifyObservers()
     var input: String = ""
     if (args.length > 0) input = args(0)
