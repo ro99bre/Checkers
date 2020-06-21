@@ -153,7 +153,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
 
   def rulesAboutBGRectangle(hw:Double): Rectangle = {
     val rect : Rectangle = new Rectangle{
-      width = hw//-(2*(hw/8))
+      width = hw
       height = hw-(2*(hw/8))
       fill = White
     }
@@ -209,7 +209,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
   }
 
   def nextPlayer(): Node = {
-    val nextPlayer: Node = new Text {//text in rectangle stackpane -> board doesn't move
+    val nextPlayer: Node = new Text {
       controller.game.lmc match {
         case Color.black => text = "Next Player: White"
         case Color.white => text = "Next Player: Red"
