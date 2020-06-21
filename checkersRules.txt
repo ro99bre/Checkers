@@ -1,10 +1,12 @@
 The objective of the game is to capture or block all of your opponents' pieces.
 
-The game is solely played on the black fields and the player with the black/red pieces must begin.
-Every piece that is not a king can only move forward. When a piece is crowned it gains the right
-to also move backwards.
+The game is solely played on the black fields and the player with the
+black/red pieces must begin.
+Every piece that is not a king can only move forward.
+If a piece reaches the other end of the board, it becomes a king.
+When a piece is crowned it gains the right to also move backwards.
 A piece can move one step in diagonal direction, if the destination field is empty.
-If the field next to the start field is taken by an opponents' piece, but the field behind it
-is free, a piece can jump over the opponents' piece to capture it.
-If a player can't make any more moves, due to either losing all his pieces or being blocked by the opponents' pieces,
-he loses.
+If the field next to the start field is taken by an opponents' piece, but the field
+behind it is free, a piece can jump over the opponents' piece to capture it.
+If a player can't make any more moves, due to either losing all his pieces
+or being blocked by the opponents' pieces, he loses.
