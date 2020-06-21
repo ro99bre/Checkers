@@ -95,7 +95,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
       val kickedWhitePane = new StackPane()
       kickedWhitePane.getChildren.addAll(textBGRectangle(recHW),kickedPiecesWhite())
       if (controller.game.winnerColor.isEmpty) playerWinnerPane.getChildren.add(nextPlayer())
-      else playerWinnerPane.getChildren.add(nextPlayer())
+      else playerWinnerPane.getChildren.add(winner())
       boardPane.add(playerWinnerPane,8,0)
       boardPane.add(kickedBlackPane,8,1)
       boardPane.add(kickedWhitePane,8,2)
