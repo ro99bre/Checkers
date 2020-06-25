@@ -1,5 +1,7 @@
 package de.htwg.se.checkers.model
 
-case object Queen extends Enumeration{
-  val isQueen, notQueen = Value
+class Queen extends SocialState {
+  override def changeState(): SocialState = {
+    return new Queen
+  }
 }

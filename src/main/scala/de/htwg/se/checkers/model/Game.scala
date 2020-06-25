@@ -33,7 +33,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   private def checkRules(s:Cell, d:Cell): (Option[Vector[Piece]], Option[Vector[Piece]], Color.Value) = {
     if (s.piece.isDefined && pieceColorCheck(s) && cellColorCheck(d) && cellEmptyCheck(d)) {
       val startColor : Color.Value = s.piece.get.color
-      if (s.piece.get.queen == Queen.isQueen) startColor match {
+      if (s.piece.get.socialState.isInstanceOf[Queen]) startColor match {
           case Color.black => return (Some(pb), moveQueenRules(s,d), startColor)
           case Color.white => return (moveQueenRules(s,d), Some(pw), startColor)
         }
@@ -77,7 +77,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   }
 
   private def crown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color,
-    Queen.isQueen, pieces(index).kicked))
+    pieces(index).makeQueen, pieces(index).kicked))
 
   private def moveBlackRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
     if (d.y - 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
@@ -104,7 +104,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
-  private def kickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.isKicked))
+  private def kickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).socialState, Kicked.isKicked))
 
   //calculates a piece to be killed in case of jumping over it
   private def middleCellCalc(s:Cell, d:Cell): Option[Cell] = {
@@ -156,7 +156,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
       if (start.piece.isDefined && start.piece.get.color == Color.black) {
         if (plusCheck(start, board)) bool = true
         else return false
-        if (start.piece.get.queen == Queen.isQueen) {
+        if (start.piece.get.socialState.isInstanceOf[Queen]) {
           if (minusCheck(start, board)) bool = true
           else return false
         }
@@ -173,7 +173,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
       if (start.piece.isDefined && start.piece.get.color == Color.white) {
         if (minusCheck(start, board)) bool = true
         else return false
-        if (start.piece.get.queen == Queen.isQueen) {
+        if (start.piece.get.socialState.isInstanceOf[Queen]) {
           if (plusCheck(start, board)) bool = true
           else return false
         }
