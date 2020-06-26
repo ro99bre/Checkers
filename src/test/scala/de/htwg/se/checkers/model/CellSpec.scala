@@ -22,7 +22,7 @@ class CellSpec extends AnyWordSpec with Matchers{
       }
     }
     "black" should {
-      val blackCell = Cell(0,0,Color.black,Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked)))
+      val blackCell = Cell(0,0,Color.black,Some(Piece(Color.black, new NormalPiece, Kicked.notKicked)))
       "have piece" in {
         blackCell.piece.isDefined should be(true)
       }

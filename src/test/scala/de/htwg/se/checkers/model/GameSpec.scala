@@ -9,84 +9,84 @@ class GameSpec extends AnyWordSpec with Matchers{
     val piecesBlack = new Pieces(Color.black)
     val piecesWhite = new Pieces(Color.white)
     val board = new Board().createBoard(piecesBlack.pieces, piecesWhite.pieces)
-    val game = Game(board,piecesBlack.pieces,piecesWhite.pieces,Color.white)
+    val game = new Game().createGame()//Game(board,piecesBlack.pieces,piecesWhite.pieces,Color.white)
     val movedBlack : Game = game.updateGame(Cell(2,0,Color.black), Color.black).updateGame(Cell(3,1,Color.black,Some(piecesBlack.pieces(0))), Color.black)
     val movedWhite : Game = movedBlack.updateGame(Cell(5,3,Color.black), Color.black).updateGame(Cell(4,2,Color.black,Some(piecesWhite.pieces(0))), Color.white)
-    val kicked : Game = movedWhite.updateGame(Cell(4,2,Color.black),Color.black,Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(0)).
+    val kicked : Game = movedWhite.updateGame(Cell(4,2,Color.black),Color.black,Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(0)).
       updateGame(Cell(3,1,Color.black), Color.black).updateGame(Cell(5,3,Color.black,Some(piecesBlack.pieces(0))), Color.black)
     val crown : Game = kicked.updateGame(Cell(7,3,Color.black),Color.white).updateGame(Cell(5,5,Color.black),Color.white).
       updateGame(Cell(6,4,Color.black,Some(piecesBlack.pieces(0))), Color.white)
     val crowned : Game = crown.updateGame(Cell(6,4,Color.black), Color.black).updateGame(Cell(7,3,Color.black,
-      Some(Piece(Color.black, Queen.isQueen, Kicked.notKicked))), Color.black,
-      Some(Piece(Color.black, Queen.isQueen, Kicked.notKicked)), Some(0))
+      Some(Piece(Color.black, new Queen, Kicked.notKicked))), Color.black,
+      Some(Piece(Color.black, new Queen, Kicked.notKicked)), Some(0))
     val crownedLMCWhite : Game = crown.updateGame(Cell(6,4,Color.black), Color.white).updateGame(Cell(7,3,Color.black,
-      Some(Piece(Color.black, Queen.isQueen, Kicked.notKicked))), Color.white,
-      Some(Piece(Color.black, Queen.isQueen, Kicked.notKicked)), Some(0))
+      Some(Piece(Color.black, new Queen, Kicked.notKicked))), Color.white,
+      Some(Piece(Color.black, new Queen, Kicked.notKicked)), Some(0))
     val queenMoved : Game = crowned.updateGame(Cell(7,3,Color.black),Color.black).updateGame(Cell(6,4,Color.black,
-      Some(Piece(Color.black, Queen.isQueen, Kicked.notKicked))),Color.black)
-    val losingPieces : Game = game.updateGame(Cell(7,7,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(0)).
-      updateGame(Cell(7,5,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(1)).
-      updateGame(Cell(7,3,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(2)).
-      updateGame(Cell(7,1,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(3)).
-      updateGame(Cell(6,6,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(4)).
-      updateGame(Cell(6,4,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(5)).
-      updateGame(Cell(6,2,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(6)).
-      updateGame(Cell(6,0,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(7)).
-      updateGame(Cell(5,7,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(8)).
-      updateGame(Cell(5,5,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(9)).
-      updateGame(Cell(5,3,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(10)).
-      updateGame(Cell(4,0,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.white).
+      Some(Piece(Color.black, new Queen, Kicked.notKicked))),Color.black)
+    val losingPieces : Game = game.updateGame(Cell(7,7,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(0)).
+      updateGame(Cell(7,5,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(1)).
+      updateGame(Cell(7,3,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(2)).
+      updateGame(Cell(7,1,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(3)).
+      updateGame(Cell(6,6,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(4)).
+      updateGame(Cell(6,4,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(5)).
+      updateGame(Cell(6,2,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(6)).
+      updateGame(Cell(6,0,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(7)).
+      updateGame(Cell(5,7,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(8)).
+      updateGame(Cell(5,5,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(9)).
+      updateGame(Cell(5,3,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(10)).
+      updateGame(Cell(4,0,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.white).
       updateGame(Cell(2,0,Color.black), Color.white)
-    val lostPieces : Game = losingPieces.updateGame(Cell(5,1,Color.black), Color.black, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(11)).
-      updateGame(Cell(6,2,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.black).
+    val lostPieces : Game = losingPieces.updateGame(Cell(5,1,Color.black), Color.black, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(11)).
+      updateGame(Cell(6,2,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.black).
       updateGame(Cell(4,0,Color.black), Color.black, None,None, Some(Color.black))
-    val losingBlocked : Game = game.updateGame(Cell(7,7,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(0)).
-      updateGame(Cell(7,5,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(1)).
-      updateGame(Cell(7,3,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(2)).
-      updateGame(Cell(7,1,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(3)).
-      updateGame(Cell(6,6,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(4)).
-      updateGame(Cell(6,4,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(5)).
-      updateGame(Cell(6,2,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(6)).
-      updateGame(Cell(5,1,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(7)).
-      updateGame(Cell(5,7,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(8)).
-      updateGame(Cell(5,5,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(9)).
-      updateGame(Cell(5,3,Color.black), Color.white, Some(Piece(Color.white, Queen.notQueen, Kicked.isKicked)), Some(10)).
+    val losingBlocked : Game = game.updateGame(Cell(7,7,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(0)).
+      updateGame(Cell(7,5,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(1)).
+      updateGame(Cell(7,3,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(2)).
+      updateGame(Cell(7,1,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(3)).
+      updateGame(Cell(6,6,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(4)).
+      updateGame(Cell(6,4,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(5)).
+      updateGame(Cell(6,2,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(6)).
+      updateGame(Cell(5,1,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(7)).
+      updateGame(Cell(5,7,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(8)).
+      updateGame(Cell(5,5,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(9)).
+      updateGame(Cell(5,3,Color.black), Color.white, Some(Piece(Color.white, new NormalPiece, Kicked.isKicked)), Some(10)).
       updateGame(Cell(2,0,Color.black), Color.white).updateGame(Cell(2,2,Color.black), Color.white).
-      updateGame(Cell(5,1,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.white).
-      updateGame(Cell(3,1,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.white)
+      updateGame(Cell(5,1,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.white).
+      updateGame(Cell(3,1,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.white)
     val lostBlocked : Game = losingBlocked.updateGame(Cell(3,1,Color.black), Color.black).
-      updateGame(Cell(4,2,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.black, None, None, Some(Color.black))
+      updateGame(Cell(4,2,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.black, None, None, Some(Color.black))
     val lostNoMove : Game = losingBlocked.updateGame(Cell(3,1,Color.black), Color.white).
-      updateGame(Cell(4,2,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.white, None, None, Some(Color.black))
-    val queenNotBlocked : Game = losingBlocked.updateGame(Cell(6,0, Color.black, Some(Piece(Color.white, Queen.isQueen,
-      Kicked.notKicked))),Color.white,Some(Piece(Color.white, Queen.isQueen, Kicked.notKicked)), Some(11))
+      updateGame(Cell(4,2,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.white, None, None, Some(Color.black))
+    val queenNotBlocked : Game = losingBlocked.updateGame(Cell(6,0, Color.black, Some(Piece(Color.white, new Queen,
+      Kicked.notKicked))),Color.white,Some(Piece(Color.white, new Queen, Kicked.notKicked)), Some(11))
     val queenNotBlockedMoved : Game = queenNotBlocked.updateGame(Cell(3,1,Color.black), Color.white).
-      updateGame(Cell(4,2,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.black)
-    val queenBlackNotBlocked : Game = game.updateGame(Cell(0,0,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(0)).
-      updateGame(Cell(0,2,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(1)).
-      updateGame(Cell(0,4,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(2)).
-      updateGame(Cell(0,6,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(3)).
-      updateGame(Cell(1,1,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(4)).
-      updateGame(Cell(1,3,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(5)).
-      updateGame(Cell(1,5,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(6)).
-      updateGame(Cell(1,7,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(7)).
-      updateGame(Cell(2,2,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(8)).
-      updateGame(Cell(2,4,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(9)).
-      updateGame(Cell(2,6,Color.black), Color.white, Some(Piece(Color.black, Queen.notQueen, Kicked.isKicked)), Some(10)).
+      updateGame(Cell(4,2,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.black)
+    val queenBlackNotBlocked : Game = game.updateGame(Cell(0,0,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(0)).
+      updateGame(Cell(0,2,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(1)).
+      updateGame(Cell(0,4,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(2)).
+      updateGame(Cell(0,6,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(3)).
+      updateGame(Cell(1,1,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(4)).
+      updateGame(Cell(1,3,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(5)).
+      updateGame(Cell(1,5,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(6)).
+      updateGame(Cell(1,7,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(7)).
+      updateGame(Cell(2,2,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(8)).
+      updateGame(Cell(2,4,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(9)).
+      updateGame(Cell(2,6,Color.black), Color.white, Some(Piece(Color.black, new NormalPiece, Kicked.isKicked)), Some(10)).
       updateGame(Cell(5,1,Color.black), Color.white).
-      updateGame(Cell(3,1,Color.black, Some(Piece(Color.white, Queen.notQueen, Kicked.notKicked))), Color.black).
-      updateGame(Cell(2,0,Color.black, Some(Piece(Color.black, Queen.isQueen, Kicked.notKicked))), Color.black,
-        Some(Piece(Color.black, Queen.isQueen, Kicked.notKicked)), Some(11))
+      updateGame(Cell(3,1,Color.black, Some(Piece(Color.white, new NormalPiece, Kicked.notKicked))), Color.black).
+      updateGame(Cell(2,0,Color.black, Some(Piece(Color.black, new Queen, Kicked.notKicked))), Color.black,
+        Some(Piece(Color.black, new Queen, Kicked.notKicked)), Some(11))
     val queenBlackNotBlockedMoved : Game = queenBlackNotBlocked.updateGame(Cell(5,3,Color.black), Color.white).
-      updateGame(Cell(4,2,Color.black, Some(Piece(Color.white, Queen.notQueen, Kicked.notKicked))), Color.white)
-    val losingBlackBlocked : Game = queenBlackNotBlocked.updateGame(Cell(2,0,Color.black, Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked))), Color.black,
-      Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked)), Some(11))
+      updateGame(Cell(4,2,Color.black, Some(Piece(Color.white, new NormalPiece, Kicked.notKicked))), Color.white)
+    val losingBlackBlocked : Game = queenBlackNotBlocked.updateGame(Cell(2,0,Color.black, Some(Piece(Color.black, new NormalPiece, Kicked.notKicked))), Color.black,
+      Some(Piece(Color.black, new NormalPiece, Kicked.notKicked)), Some(11))
     val lostBlackBlocked : Game = losingBlackBlocked.updateGame(Cell(5,3,Color.black), Color.white).
-      updateGame(Cell(4,2,Color.black, Some(Piece(Color.white, Queen.notQueen, Kicked.notKicked))), Color.white, None, None, Some(Color.white))
-    val whiteQueen : Game = game.updateGame(Cell(5,1,Color.black,Some(Piece(Color.white, Queen.isQueen, Kicked.notKicked))),
-      Color.black, Some(Piece(Color.white, Queen.isQueen, Kicked.notKicked)), Some(0))
+      updateGame(Cell(4,2,Color.black, Some(Piece(Color.white, new NormalPiece, Kicked.notKicked))), Color.white, None, None, Some(Color.white))
+    val whiteQueen : Game = game.updateGame(Cell(5,1,Color.black,Some(Piece(Color.white, new Queen, Kicked.notKicked))),
+      Color.black, Some(Piece(Color.white, new Queen, Kicked.notKicked)), Some(0))
     val whiteQueenMoved : Game = whiteQueen.updateGame(Cell(5,1,Color.black), Color.white).updateGame(Cell(4,2,Color.black,
-      Some(Piece(Color.white, Queen.isQueen, Kicked.notKicked))),Color.white)
+      Some(Piece(Color.white, new Queen, Kicked.notKicked))),Color.white)
     val string : String = game.toString
     val lostString : String = lostPieces.toString
 
