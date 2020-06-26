@@ -1,7 +1,7 @@
 package de.htwg.se.checkers.aview
 
+import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.checkers.util.Observer
-import de.htwg.se.checkers.control.Controller
 
 class TextUI(controller: Controller) extends Observer {
 

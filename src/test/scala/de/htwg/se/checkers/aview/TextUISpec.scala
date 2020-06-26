@@ -1,9 +1,9 @@
 package de.htwg.se.checkers.aview
 
+import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Game
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.checkers.model.Game
-import de.htwg.se.checkers.control.Controller
 
 class TextUISpec extends AnyWordSpec with Matchers {
 

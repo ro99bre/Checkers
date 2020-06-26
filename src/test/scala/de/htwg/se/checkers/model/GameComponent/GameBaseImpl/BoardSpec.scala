@@ -1,4 +1,4 @@
-package de.htwg.se.checkers.model
+package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

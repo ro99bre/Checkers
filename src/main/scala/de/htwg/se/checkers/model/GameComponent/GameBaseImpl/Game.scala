@@ -1,10 +1,12 @@
-package de.htwg.se.checkers.model
+package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
-case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.Value, winnerColor : Option[Color.Value] = None) {
+import de.htwg.se.checkers.model.GameComponent.{GameBaseImpl, GameTrait}
+
+case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.Value, winnerColor : Option[Color.Value] = None) extends GameTrait{
 
   def this() = this(new Board().createBoard(new Pieces(Color.black).pieces, new Pieces(Color.white).pieces),new Pieces(Color.black).pieces, new Pieces(Color.white).pieces, Color.white)
 
-  def movePiece(s:Cell, d:Cell): Game = {
+  override def movePiece(s:Cell, d:Cell): Game = {
     if (winnerColor.isDefined) return this
     checkRules(s, d) match {
       case (Some(_), Some(_), _) => Game(this.updatePiece(s,d),checkRules(s, d)._1.get,
@@ -13,7 +15,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
-  def undoMove(s:Cell, d:Cell): Game = {
+  override def undoMove(s:Cell, d:Cell): Game = {
     var opponentColor = Color.white
     s.piece.get.color match {
       case Color.black => opponentColor = Color.white
@@ -37,7 +39,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   }
 
   //updates cells after piece has been moved (and kicked), returns new board
-  private def updatePiece(s:Cell, d:Cell): Board = {//s=start d=destination
+  override def updatePiece(s:Cell, d:Cell): Board = {//s=start d=destination
     var piece : Piece = s.piece.get
     piece.color match {
       case Color.black => piece = checkRules(s, d)._1.get(pb.indexOf(piece))
@@ -53,7 +55,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   }
 
   //returns black, then white pieces and color of move after rules have been checked; returns None if move is invalid
-  private def checkRules(s:Cell, d:Cell): (Option[Vector[Piece]], Option[Vector[Piece]], Color.Value) = {
+  override def checkRules(s:Cell, d:Cell): (Option[Vector[Piece]], Option[Vector[Piece]], Color.Value) = {
     if (s.piece.isDefined && pieceColorCheck(s) && cellColorCheck(d) && cellEmptyCheck(d)) {
       val startColor : Color.Value = s.piece.get.color
       if (s.piece.get.queen == Queen.isQueen) startColor match {
@@ -68,13 +70,13 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     (None, None, lmc)
   }
 
-  private def pieceColorCheck(start:Cell): Boolean = start.piece.get.color != lmc
+  override def pieceColorCheck(start:Cell): Boolean = start.piece.get.color != lmc
 
-  private def cellColorCheck(destination:Cell): Boolean = destination.color == Color.black
+  override def cellColorCheck(destination:Cell): Boolean = destination.color == Color.black
 
-  private def cellEmptyCheck(destination:Cell): Boolean = destination.piece.isEmpty
+  override def cellEmptyCheck(destination:Cell): Boolean = destination.piece.isEmpty
 
-  private def opponentPieces(start:Cell): Vector[Piece] = {
+  override def opponentPieces(start:Cell): Vector[Piece] = {
     var color:Color.Value = lmc
     if (start.piece.isDefined) color = start.piece.get.color
     color match {
@@ -83,14 +85,14 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
-  private def moveQueenRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
+  override def moveQueenRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
     if ((d.x + 1 == s.x || d.x - 1 == s.x) && (d.y - 1 == s.y || d.y + 1 == s.y)) return Some(opponentPieces(s))
     else if ((d.x + 2 == s.x || d.x - 2 == s.x) && (d.y - 2 == s.y || d.y + 2 == s.y)) return kickPieceCheck(s, d)
     None
   }
 
   //checks if a piece has arrived at the other side of the board and crowns it, returns updated vector of pieces
-  private def queenDestinationCheck(start:Cell, destination:Cell): Vector[Piece] = {
+  override def queenDestinationCheck(start:Cell, destination:Cell): Vector[Piece] = {
     (start.piece.get.color, destination.y) match {
       case (Color.black, 7) => crown(pb, pb.indexOf(start.piece.get))
       case (Color.white, 0) => crown(pw, pw.indexOf(start.piece.get))
@@ -99,7 +101,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
-  private def deQueenDestinationCheck(s:Cell, d:Cell, tempboard:Board) : Option[(Board,Vector[Piece],Vector[Piece])] = {
+  override def deQueenDestinationCheck(s:Cell, d:Cell, tempboard:Board) : Option[(Board,Vector[Piece],Vector[Piece])] = {
     var pbTemp = pb
     var pwTemp = pw
     var index: Int = 0
@@ -114,38 +116,38 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     Some(temp,pbTemp,pwTemp)
   }
 
-  private def crown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color,
+  override def crown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, GameBaseImpl.Piece(pieces(index).color,
     Queen.isQueen, pieces(index).kicked))
 
-  private def deCrown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color,
+  override def deCrown(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, GameBaseImpl.Piece(pieces(index).color,
     Queen.notQueen, pieces(index).kicked))
 
-  private def moveBlackRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
+  override def moveBlackRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
     if (d.y - 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
     else if (d.y - 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) return kickPieceCheck(s, d)
     None
   }
 
-  private def moveWhiteRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
+  override def moveWhiteRules(s:Cell, d:Cell): Option[Vector[Piece]] = {
     if (d.y + 1 == s.y && (d.x - 1 == s.x || d.x + 1 == s.x)) return Some(opponentPieces(s))
     else if (d.y + 2 == s.y && (d.x - 2 == s.x || d.x + 2 == s.x)) return kickPieceCheck(s, d)
     None
   }
 
-  private def kickPieceCheck(s:Cell, d:Cell): Option[Vector[Piece]] = {
+  override def kickPieceCheck(s:Cell, d:Cell): Option[Vector[Piece]] = {
     val middlePiece :Cell = middleCellCalc(s, d).get
     if (middleCellCheck(s, middlePiece)) return Some(updatePiecesKicked(middlePiece.piece.get))
     None
   }
 
-  private def updatePiecesKicked(middlePiece: Piece): Vector[Piece] = {
+  override def updatePiecesKicked(middlePiece: Piece): Vector[Piece] = {
     middlePiece.color match {
       case Color.black => kickPiece(pb, pb.indexOf(middlePiece))
       case Color.white => kickPiece(pw, pw.indexOf(middlePiece))
     }
   }
 
-  private def deKickPieceCheck(s:Cell, d:Cell, tempboard:Board, opponentColor:Color.Value) : Option[(Board,Vector[Piece],Vector[Piece])] = {
+  override def deKickPieceCheck(s:Cell, d:Cell, tempboard:Board, opponentColor:Color.Value) : Option[(Board,Vector[Piece],Vector[Piece])] = {
     var pbTemp = pb
     var pwTemp = pw
     var index: Int = 0
@@ -165,12 +167,12 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     None
   }
 
-  private def kickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.isKicked))
+  override def kickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.isKicked))
 
-  private def deKickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.notKicked))
+  override def deKickPiece(pieces: Vector[Piece], index: Int): Vector[Piece] = pieces.updated(index, Piece(pieces(index).color, pieces(index).queen, Kicked.notKicked))
 
   //calculates a piece to be killed in case of jumping over it
-  private def middleCellCalc(s:Cell, d:Cell): Option[Cell] = {
+  override def middleCellCalc(s:Cell, d:Cell): Option[Cell] = {
     //vals with upperCase first letter as "stable identifier"
     val YPlus :Int = d.y+2
     val YMinus :Int = d.y-2
@@ -185,11 +187,11 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     }
   }
 
-  private def middleCellCheck(start:Cell, middleCell:Cell): Boolean = middleCell.piece.isDefined && (middleCell.piece.get.color != start.piece.get.color)
+  override def middleCellCheck(start:Cell, middleCell:Cell): Boolean = middleCell.piece.isDefined && (middleCell.piece.get.color != start.piece.get.color)
 
-  def countKickedPieces(): (Int, Int) = (countKickedPieces(pb), countKickedPieces(pw))
+  override def countKickedPieces(): (Int, Int) = (countKickedPieces(pb), countKickedPieces(pw))
 
-  private def countKickedPieces(pieces: Vector[Piece]): Int = {
+  override def countKickedPieces(pieces: Vector[Piece]): Int = {
     var counter :Int = 0
     for (i <- pieces.indices) {
       if (pieces(i).kicked == Kicked.isKicked) counter += 1
@@ -197,21 +199,21 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     counter
   }
 
-  def cell(y:Int, x:Int): Cell = board.cells.cell(y,x)
+  override def cell(y:Int, x:Int): Cell = board.cells.cell(y,x)
 
-  private def hasWon(start:Cell, destination:Cell) : Option[Color.Value] = {
+  override def hasWon(start:Cell, destination:Cell) : Option[Color.Value] = {
     if(countKickedPieces(checkRules(start,destination)._1.get) == 12) Some(Color.white)
     else if(countKickedPieces(checkRules(start,destination)._2.get) == 12) Some(Color.black)
     else isBlocked(updatePiece(start,destination))
   }
 
-  private def isBlocked(board: Board) : Option[Color.Value] = {//returns winner color
+  override def isBlocked(board: Board) : Option[Color.Value] = {//returns winner color
     if (isBlackBlocked(board)) Some(Color.white)
     else if (isWhiteBlocked(board)) Some(Color.black)
     else None
   }
 
-  private def isBlackBlocked(board: Board): Boolean = {
+  override def isBlackBlocked(board: Board): Boolean = {
     var bool : Boolean = false
     for (y <- 0 until 8;
          x <- 0 until 8) {
@@ -228,7 +230,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     bool
   }
 
-  private def isWhiteBlocked(board: Board): Boolean = {
+  override def isWhiteBlocked(board: Board): Boolean = {
     var bool : Boolean = false
     for (y <- 0 until 8;
          x <- 0 until 8) {
@@ -245,7 +247,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     bool
   }
 
-  private def plusCheck(start:Cell, board: Board): Boolean = {
+  override def plusCheck(start:Cell, board: Board): Boolean = {
     if (yxPlusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y+1, start.x+1))) return false
     if (yxPlusMinusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y+1, start.x-1))) return false
     if (yxPlusTwoCheck(start) && cellEmptyCheck(board.cells.cell(start.y+2, start.x+2))) return false
@@ -253,7 +255,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     true
   }
 
-  private def minusCheck(start:Cell, board: Board) : Boolean = {
+  override def minusCheck(start:Cell, board: Board) : Boolean = {
     if (yxMinusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y-1, start.x-1))) return false
     if (yxMinusPlusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y-1, start.x+1))) return false
     if (yxMinusTwoCheck(start) && cellEmptyCheck(board.cells.cell(start.y-2, start.x-2))) return false
@@ -261,21 +263,21 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     true
   }
 
-  private def yxPlusOneCheck(s:Cell) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
+  override def yxPlusOneCheck(s:Cell) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
 
-  private def yxPlusMinusOneCheck(s:Cell) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
+  override def yxPlusMinusOneCheck(s:Cell) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
 
-  private def yxMinusOneCheck(s:Cell) : Boolean = s.y - 1 >= 0 && s.y - 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
+  override def yxMinusOneCheck(s:Cell) : Boolean = s.y - 1 >= 0 && s.y - 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
 
-  private def yxMinusPlusOneCheck(s:Cell) : Boolean = s.y - 1 >= 0 && s.y - 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
+  override def yxMinusPlusOneCheck(s:Cell) : Boolean = s.y - 1 >= 0 && s.y - 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
 
-  private def yxPlusTwoCheck(s:Cell) : Boolean = s.y + 2 >= 0 && s.y + 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
+  override def yxPlusTwoCheck(s:Cell) : Boolean = s.y + 2 >= 0 && s.y + 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
 
-  private def yxPlusMinusTwoCheck(s:Cell) : Boolean = s.y + 2 >= 0 && s.y + 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
+  override def yxPlusMinusTwoCheck(s:Cell) : Boolean = s.y + 2 >= 0 && s.y + 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
 
-  private def yxMinusTwoCheck(s:Cell) : Boolean = s.y - 2 >= 0 && s.y - 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
+  override def yxMinusTwoCheck(s:Cell) : Boolean = s.y - 2 >= 0 && s.y - 2 <= 7 && s.x - 2 >= 0 && s.x - 2 <= 7
 
-  private def yxMinusPlusTwoCheck(s:Cell) : Boolean = s.y - 2 >= 0 && s.y - 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
+  override def yxMinusPlusTwoCheck(s:Cell) : Boolean = s.y - 2 >= 0 && s.y - 2 <= 7 && s.x + 2 >= 0 && s.x + 2 <= 7
 
   override def toString: String = {
     var sb  = new StringBuilder()
@@ -293,7 +295,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   }
 
   //test purposes only; updating game for comparison in tests
-  def updateGame(cell: Cell, lmc:Color.Value, piece: Option[Piece] = None, index: Option[Int] = None, winner:Option[Color.Value] = None) : Game = {
+  override def updateGame(cell: Cell, lmc:Color.Value, piece: Option[Piece] = None, index: Option[Int] = None, winner:Option[Color.Value] = None) : Game = {
     var piecesWhite : Vector[Piece] = pw
     var piecesBlack : Vector[Piece] = pb
     if (piece.isDefined && index.isDefined) {

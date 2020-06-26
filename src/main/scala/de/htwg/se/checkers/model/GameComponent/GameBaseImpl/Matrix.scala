@@ -1,4 +1,4 @@
-package de.htwg.se.checkers.model
+package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
 case class Matrix[T](rows:Vector[Vector[T]]) {
   def this(filling:T) = this(Vector.tabulate(8, 8){(i,j) => filling})

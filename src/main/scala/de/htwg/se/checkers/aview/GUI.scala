@@ -1,7 +1,7 @@
 package de.htwg.se.checkers.aview
 
-import de.htwg.se.checkers.control.Controller
-import de.htwg.se.checkers.model.{Color, Queen}
+import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Queen}
 import de.htwg.se.checkers.util.Observer
 import javafx.scene.shape.Circle
 import scalafx.Includes._

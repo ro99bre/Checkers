@@ -1,5 +1,6 @@
-package de.htwg.se.checkers.model
+package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -22,7 +23,7 @@ class CellSpec extends AnyWordSpec with Matchers{
       }
     }
     "black" should {
-      val blackCell = Cell(0,0,Color.black,Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked)))
+      val blackCell = GameBaseImpl.Cell(0,0,Color.black,Some(Piece(Color.black, Queen.notQueen, Kicked.notKicked)))
       "have piece" in {
         blackCell.piece.isDefined should be(true)
       }

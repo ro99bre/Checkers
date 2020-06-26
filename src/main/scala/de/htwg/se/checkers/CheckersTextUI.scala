@@ -1,8 +1,9 @@
 package de.htwg.se.checkers
 
 import de.htwg.se.checkers.aview.{GUI, TextUI}
+import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.model._
-import de.htwg.se.checkers.control.Controller
 
 object CheckersTextUI {
 

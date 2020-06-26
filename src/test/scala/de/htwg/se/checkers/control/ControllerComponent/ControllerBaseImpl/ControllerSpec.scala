@@ -1,9 +1,10 @@
-package de.htwg.se.checkers.control
+package de.htwg.se.checkers.control.ControllerComponent.ControllerBaseImpl
 
+import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Game
+import de.htwg.se.checkers.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.checkers.model.Game
-import de.htwg.se.checkers.util.Observer
 
 class ControllerSpec extends AnyWordSpec with Matchers{
 
