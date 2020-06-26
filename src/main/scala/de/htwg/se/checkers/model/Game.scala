@@ -3,6 +3,12 @@ package de.htwg.se.checkers.model
 case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.Value, winnerColor : Option[Color.Value] = None) {
 
   def this() = this(new Board().createBoard(new Pieces(Color.black).pieces, new Pieces(Color.white).pieces),new Pieces(Color.black).pieces, new Pieces(Color.white).pieces, Color.white)
+  val pbNormal = new Pieces(Color.black).pieces
+  val pwNormal = new Pieces(Color.white).pieces
+
+  def createGame(): Game = {
+    Game(new Board().createBoard(pbNormal,pwNormal),pbNormal,pwNormal, Color.white)
+  }
 
   def movePiece(s:Cell, d:Cell): Game = {
     if (winnerColor.isDefined) return this

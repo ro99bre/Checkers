@@ -6,7 +6,7 @@ import de.htwg.se.checkers.model._
 class Controller(var game:Game) extends Observable {
 
   def createGame():Unit = {
-    game = new Game()
+    game = new Game().createGame()
     notifyObservers()
   }
 

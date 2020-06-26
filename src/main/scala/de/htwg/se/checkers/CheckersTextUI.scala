@@ -13,7 +13,7 @@ object CheckersTextUI {
 
     println("Started Checkers in TUI Mode")
 
-    val controller = new Controller(new Game())
+    val controller = new Controller(new Game().createGame())
     val tui = new TextUI(controller)
     controller.notifyObservers()
 
