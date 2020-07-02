@@ -1,6 +1,6 @@
 package de.htwg.se.checkers.model.GameComponent
 
-import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Board, Cell, Color, Game, Piece}
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Board, Cell, Color, Piece}
 
 trait GameTrait {
 

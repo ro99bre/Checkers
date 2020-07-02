@@ -19,13 +19,13 @@ object CheckersTextUI {
     var input: String = ""
     if (args.length > 0) input = args(0)
     if(!input.isEmpty) {
-      if (controller.game.winnerColor.isDefined) println("Winner: " + controller.game.winnerColor.get)
-      else if (controller.game.lmc == Color.white) print("Next Player: Black\nNext move: ")
+      if (controller.getWinnerColor().isDefined) println("Winner: " + controller.getWinnerColor().get)
+      else if (controller.getLastMoveColor() == Color.white) print("Next Player: Black\nNext move: ")
       else print("Next Player: White\nNext move: ")
       tui.tuiProcessor(input)
     } else do {
-        if (controller.game.winnerColor.isDefined) println("Winner: " + controller.game.winnerColor.get)
-        else if (controller.game.lmc == Color.white) print("Next Player: Black\nNext move: ")
+        if (controller.getWinnerColor().isDefined) println("Winner: " + controller.getWinnerColor().get)
+        else if (controller.getLastMoveColor() == Color.white) print("Next Player: Black\nNext move: ")
         else print("Next Player: White\nNext move: ")
         input = scala.io.StdIn.readLine()
         tui.tuiProcessor(input)
