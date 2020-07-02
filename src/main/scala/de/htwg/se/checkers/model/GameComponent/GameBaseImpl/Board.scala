@@ -1,9 +1,9 @@
 package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
-import de.htwg.se.checkers.model.GameComponent.GameBaseImpl
+import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameBaseImpl}
 
-case class Board(cells: Matrix[Cell]) {
-  def this() = this(new Matrix[Cell](GameBaseImpl.Cell(0,0,Color.white)))
+case class Board(cells: Matrix[CellTrait]) {
+  def this() = this(new Matrix[CellTrait](GameBaseImpl.Cell(0,0,Color.white)))
 
   def createBoard(piecesBlack:Vector[Piece], piecesWhite:Vector[Piece]): Board = {
     var temp: Board = this
