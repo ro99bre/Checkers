@@ -16,6 +16,9 @@ class ControllerSpec extends AnyWordSpec with Matchers{
         var updated: Boolean = false
         override def update(): Unit = updated = true
       }
+      "return the current game" in {
+        controller.getGame() should be(game)
+      }
       controller.add(observer)
       "notify Observer after creation of game" in {
         controller.createGame()
