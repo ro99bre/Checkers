@@ -90,6 +90,8 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   override def getLastMoveColor(): Color.Value = Color.white
 
   override def getWinnerColor(): Option[Color.Value] = winnerColor
+
+  override def getBoard(): Board = board
 }
 
 object EmptyCell extends CellTrait{

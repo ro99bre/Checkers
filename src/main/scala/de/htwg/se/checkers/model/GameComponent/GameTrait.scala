@@ -48,6 +48,8 @@ trait GameTrait {
 
   def getLastMoveColor() : Color.Value
   def getWinnerColor() : Option[Color.Value]
+
+  def getBoard(): Board
 }
 
 trait CellTrait {

@@ -2,6 +2,7 @@ package de.htwg.se.checkers.control.controllerComponent.ControllerMockImpl
 
 import de.htwg.se.checkers.control.controllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
+import de.htwg.se.checkers.model.GameComponent.GameTrait
 
 class Controller(var game:Game) extends ControllerTrait {
 
@@ -16,6 +17,8 @@ class Controller(var game:Game) extends ControllerTrait {
   override def getLastMoveColor(): Color.Value = Color.white
 
   override def getWinnerColor(): Option[Color.Value] = None
+
+  override def getGame(): GameTrait = new Game()
 
   def gameToString:String = ""
 }
