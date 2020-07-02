@@ -1,5 +1,6 @@
 package de.htwg.se.checkers.control.controllerComponent
 
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Color
 import de.htwg.se.checkers.util.Observable
 
 trait ControllerTrait extends Observable {
@@ -12,4 +13,8 @@ trait ControllerTrait extends Observable {
   def redo(): Unit
 
   def gameToString: String
+
+  def getLastMoveColor() : Color.Value
+
+  def getWinnerColor() : Option[Color.Value]
 }
