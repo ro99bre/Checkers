@@ -1,5 +1,6 @@
 package de.htwg.se.checkers.aview
 
+import de.htwg.se.checkers.control.controllerComponent.ControllerTrait
 import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Queen}
 import de.htwg.se.checkers.util.Observer
@@ -10,15 +11,15 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.geometry.Pos
 import scalafx.geometry.Pos.{Center, TopCenter}
 import scalafx.scene.control.Button
-import scalafx.scene.{Node, Scene}
 import scalafx.scene.layout.{BorderPane, GridPane, StackPane, VBox}
 import scalafx.scene.paint.Color._
 import scalafx.scene.shape.Rectangle
 import scalafx.scene.text.Text
+import scalafx.scene.{Node, Scene}
 
 import scala.io.{BufferedSource, Source}
 
-class GUI(controller: Controller) extends JFXApp with Observer {
+class GUI(controller: ControllerTrait) extends JFXApp with Observer {
 
   controller.add(this)
 
@@ -76,8 +77,9 @@ class GUI(controller: Controller) extends JFXApp with Observer {
         var square = new StackPane()
         square.setPrefSize(recHW,recHW)
 
-        if (controller.game.board.cells.cell(yr,xr).piece.isDefined) {
-          (controller.game.board.cells.cell(yr,xr).piece.get.color, controller.game.board.cells.cell(yr,xr).piece.get.queen) match {
+        //if (controller.game.board.cells.cell(yr,xr).piece.isDefined) {
+        if (controller.getGame().getBoard().cells.cell(yr,xr).piece.isDefined) {
+          (controller.getGame().getBoard().cells.cell(yr,xr).piece.get.color, controller.getGame().getBoard().cells.cell(yr,xr).piece.get.queen) match {
             case (Color.black, Queen.notQueen) => square.getChildren.addAll(createCell(recHW,xr,yr), createBlackPiece(), createSquareButton(recHW,xr,yr))
             case (Color.white, Queen.notQueen) => square.getChildren.addAll(createCell(recHW,xr,yr), createWhitePiece(), createSquareButton(recHW,xr,yr))
             case (Color.black, Queen.isQueen) => square.getChildren.addAll(createCell(recHW,xr,yr), createBlackPiece(), createQueen(), createSquareButton(recHW,xr,yr))
@@ -94,7 +96,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
       kickedBlackPane.getChildren.addAll(textBGRectangle(recHW),kickedPiecesBlack())
       val kickedWhitePane = new StackPane()
       kickedWhitePane.getChildren.addAll(textBGRectangle(recHW),kickedPiecesWhite())
-      if (controller.game.winnerColor.isEmpty) playerWinnerPane.getChildren.add(nextPlayer())
+      if (controller.getGame().getWinnerColor().isEmpty) playerWinnerPane.getChildren.add(nextPlayer())
       else playerWinnerPane.getChildren.add(winner())
       boardPane.add(playerWinnerPane,8,0)
       boardPane.add(kickedBlackPane,8,1)
@@ -178,7 +180,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
       height = recHW
       x = xr.toDouble
       y = yr.toDouble
-      if (controller.game.board.cells.cell(yr,xr).color == Color.white) fill = White
+      if (controller.getGame().getBoard().cells.cell(yr,xr).color == Color.white) fill = White
       else fill = Black
     }
     cell
@@ -210,7 +212,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
 
   def nextPlayer(): Node = {
     val nextPlayer: Node = new Text {
-      controller.game.lmc match {
+      controller.getLastMoveColor() match {
         case Color.black => text = "Next Player: White"
         case Color.white => text = "Next Player: Red"
       }
@@ -230,7 +232,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
 
   def winner(): Node = {
     val winner: Node = new Text {
-      controller.game.winnerColor.get match {
+      controller.getWinnerColor() match {
         case Color.black => text = "Winner: Red"
         case Color.white => text = "Winner: White"
       }
@@ -241,7 +243,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
 
   def kickedPiecesBlack() : Node = {
     val kickedBlack: Node = new Text {
-      text = "Dead Red Pieces: " + controller.game.countKickedPieces()._1
+      text = "Dead Red Pieces: " + controller.getGame().countKickedPieces()._1
       style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
     }
     kickedBlack
@@ -249,7 +251,7 @@ class GUI(controller: Controller) extends JFXApp with Observer {
 
   def kickedPiecesWhite() : Node = {
     val kickedWhite: Node = new Text {
-      text = "Dead White Pieces: " + controller.game.countKickedPieces()._2
+      text = "Dead White Pieces: " + controller.getGame().countKickedPieces()._2
       style = "-fx-font-size: " + stage.getHeight/29 + "pt;"
     }
     kickedWhite

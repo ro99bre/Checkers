@@ -1,7 +1,7 @@
 package de.htwg.se.checkers
 
 import com.google.inject.Guice
-import de.htwg.se.checkers.aview.TextUI
+import de.htwg.se.checkers.aview.{GUI, TextUI}
 import de.htwg.se.checkers.control.controllerComponent.ControllerTrait
 import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
@@ -20,8 +20,8 @@ object CheckersTextUI {
 
     //val controller = new Controller(game)
     val tui = new TextUI(controller)
-    //val gui = new GUI(controller)
-    //gui.main(Array())
+    val gui = new GUI(controller)
+    gui.main(Array())
     controller.notifyObservers()
     var input: String = ""
     if (args.length > 0) input = args(0)
