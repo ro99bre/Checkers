@@ -1,10 +1,10 @@
-package de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl
+package de.htwg.se.checkers.control.ControllerComponent.controllerBaseImpl
 import de.htwg.se.checkers.util.Command
 
 import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.checkers.CheckersModule
-import de.htwg.se.checkers.control.controllerComponent.ControllerTrait
+import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 import de.htwg.se.checkers.util.UndoManager

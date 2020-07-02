@@ -1,4 +1,4 @@
-package de.htwg.se.checkers.control.controllerComponent
+package de.htwg.se.checkers.control.ControllerComponent
 
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Color
 import de.htwg.se.checkers.model.GameComponent.GameTrait

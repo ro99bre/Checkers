@@ -2,7 +2,7 @@ package de.htwg.se.checkers
 
 import com.google.inject.Guice
 import de.htwg.se.checkers.aview.{GUI, TextUI}
-import de.htwg.se.checkers.control.controllerComponent.ControllerTrait
+import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Color
 
 object CheckersGUI {

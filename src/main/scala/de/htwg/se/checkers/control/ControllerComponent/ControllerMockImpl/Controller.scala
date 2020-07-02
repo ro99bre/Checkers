@@ -1,6 +1,6 @@
-package de.htwg.se.checkers.control.controllerComponent.ControllerMockImpl
+package de.htwg.se.checkers.control.ControllerComponent.ControllerMockImpl
 
-import de.htwg.se.checkers.control.controllerComponent.ControllerTrait
+import de.htwg.se.checkers.control.ControllerComponent.ControllerTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 

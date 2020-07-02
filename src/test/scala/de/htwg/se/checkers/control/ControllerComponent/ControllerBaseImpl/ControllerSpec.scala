@@ -1,6 +1,6 @@
 package de.htwg.se.checkers.control.ControllerComponent.ControllerBaseImpl
 
-import de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.checkers.control.ControllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Game
 import de.htwg.se.checkers.util.Observer
 import org.scalatest.matchers.should.Matchers

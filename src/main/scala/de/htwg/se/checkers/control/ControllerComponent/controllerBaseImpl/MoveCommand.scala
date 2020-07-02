@@ -1,4 +1,4 @@
-package de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl
+package de.htwg.se.checkers.control.ControllerComponent.controllerBaseImpl
 
 import de.htwg.se.checkers.util.Command
 
