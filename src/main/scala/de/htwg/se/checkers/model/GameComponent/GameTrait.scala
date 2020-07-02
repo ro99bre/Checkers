@@ -45,6 +45,9 @@ trait GameTrait {
   def yxMinusPlusTwoCheck(s:Cell) : Boolean
   def updateGame(cell: Cell, lmc:Color.Value, piece: Option[Piece] = None, index: Option[Int] = None, winner:Option[Color.Value] = None) : GameTrait
 
+
+  def getLastMoveColor() : Color.Value
+  def getWinnerColor() : Option[Color.Value]
 }
 
 trait CellTrait {

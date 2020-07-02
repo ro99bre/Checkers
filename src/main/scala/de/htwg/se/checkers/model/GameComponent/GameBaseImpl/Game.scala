@@ -1,6 +1,6 @@
 package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
-import de.htwg.se.checkers.model.GameComponent.{GameBaseImpl, GameTrait}
+import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameBaseImpl, GameTrait}
 
 case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.Value, winnerColor : Option[Color.Value] = None) extends GameTrait{
 
@@ -305,4 +305,8 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     val updatedBoard = board.copy(board.cells.replaceCell(cell.y, cell.x, cell))
     Game(updatedBoard, piecesBlack, piecesWhite, lmc, winner)
   }
+
+  override def getLastMoveColor(): Color.Value = lmc
+
+  override def getWinnerColor(): Option[Color.Value] = winnerColor
 }
