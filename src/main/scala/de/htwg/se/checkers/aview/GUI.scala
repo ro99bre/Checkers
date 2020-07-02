@@ -212,7 +212,7 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
 
   def nextPlayer(): Node = {
     val nextPlayer: Node = new Text {
-      controller.getLastMoveColor() match {
+      controller.getGame().getLastMoveColor() match {
         case Color.black => text = "Next Player: White"
         case Color.white => text = "Next Player: Red"
       }
@@ -232,7 +232,7 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
 
   def winner(): Node = {
     val winner: Node = new Text {
-      controller.getWinnerColor() match {
+      controller.getGame().getWinnerColor() match {
         case Color.black => text = "Winner: Red"
         case Color.white => text = "Winner: White"
       }

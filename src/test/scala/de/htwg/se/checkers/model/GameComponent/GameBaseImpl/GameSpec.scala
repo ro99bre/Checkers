@@ -228,10 +228,10 @@ class GameSpec extends AnyWordSpec with Matchers{
       lostWhitePieces.toString should be(lostString)
     }
     "be able to tell the last moved color" in {
-      movedBlack.getLastMoveColor() should be(Color.black)
+      movedBlack.getLastMoveColor should be(Color.black)
     }
     "be able to tell the winning color" in {
-      lostBlackPieces.getWinnerColor() should be(Some(Color.white))
+      lostBlackPieces.getWinnerColor should be(Some(Color.white))
     }
     "be able to return a board" in {
       game.getBoard should be(board)
