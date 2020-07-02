@@ -1,7 +1,7 @@
 package de.htwg.se.checkers.control.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.checkers.control.controllerComponent.ControllerTrait
-import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Game
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Color, Game}
 import de.htwg.se.checkers.util.UndoManager
 
 class Controller(var game:Game) extends ControllerTrait {
@@ -27,6 +27,10 @@ class Controller(var game:Game) extends ControllerTrait {
     undoManager.redoStep()
     notifyObservers()
   }
+
+  override def getLastMoveColor(): Color.Value = game.lmc
+
+  override def getWinnerColor(): Option[Color.Value] = game.winnerColor
 
   override def gameToString:String = game.toString
 }
