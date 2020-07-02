@@ -6,6 +6,9 @@ libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.2"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.2" % "test"
 libraryDependencies += "org.scalatestplus" %% "junit-4-12" % "3.1.2.0" % "test"
 
+libraryDependencies += "com.google.inject" % "guice" % "4.2.1"
+libraryDependencies += "net.codingwell" % "scala-guice_2.13" % "4.2.10"
+
 libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
 resolvers += Resolver.sonatypeRepo("snapshots")
 
