@@ -6,8 +6,9 @@ import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
 import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameTrait}
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.checkers.CheckersModule
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Piece
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json.{JsValue, Json, Writes}
+import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 
 import scala.io.{BufferedSource, Source}
 
@@ -24,18 +25,67 @@ class FileIO extends FileIOTrait {
     game
   }
 
+  implicit val cellWrites = new Writes[CellTrait] {
+    def writes(cell: CellTrait): JsObject = Json.obj(
+      "y" -> cell.y,
+      "x" -> cell.x,
+      "cellColor" -> cell.color.toString//,//???
+      //if (cell.piece.isDefined) "piece" -> cell.piece
+      //"piece" -> cell.piece
+      //implicit val for piece
+    )
+  }
+
+  implicit val pieceWrites = new Writes[Piece] {
+    def writes(piece: Piece): JsObject = Json.obj(
+      "color" -> piece.color,
+      "queen" -> piece.queen,
+      "kicked" -> piece.kicked
+    )
+  }
+
+  def gameToJson(game: GameTrait): JsObject = {
+    Json.obj(
+      "game" -> Json.obj(
+        "board" -> Json.toJson(
+          for {
+            y <- 0 until 8;
+            x <- 0 until 8
+          } yield {
+            Json.obj(
+              "y" -> game.cell(y,x).y,
+              "x" -> game.cell(y,x).x,
+              "cell" -> Json.toJson(game.cell(y,x))//implicit val
+            )
+          }
+        ),
+        "pb" -> Json.toJson(//obj???
+          for (index <- 0 until 12 )
+            yield {
+              Json.obj(
+                "index" -> index,
+                "piece" -> Json.toJson(game.getPB())//implicit val??
+              )
+            }
+        ),
+        "pw" -> Json.toJson(//obj???
+          for (index <- 0 until 12 )
+            yield {
+              Json.obj(
+                "index" -> index,
+                "piece" -> Json.toJson(game.getPW())
+              )
+            }
+        ) //,
+        //"lmc" -> Json.toJson(game.getLastMoveColor()),//obj???
+        //"winnercolor"-> Json.toJson(game.getWinnerColor())//obj???
+      )
+    )
+  }
+
   override def save(game: GameTrait): Unit = {
     val pw = new PrintWriter(new File("game.json"))
     //pw.write(Json.prettyPrint(gameToJson(game)))
     pw.close()
-  }
-
-  implicit val cellWrites = new Writes[CellTrait] {
-    def writes(cell: CellTrait) = Json.obj(
-      "y" -> cell.y,
-      "x" -> cell.x,
-      "cellColor" -> cell.color.toString//,//???
-      //"piece" -> cell.piece
-    )
   }
 }

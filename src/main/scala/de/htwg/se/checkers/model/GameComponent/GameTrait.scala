@@ -50,6 +50,9 @@ trait GameTrait {
   def getWinnerColor() : Option[Color.Value]
 
   def getBoard(): Board
+
+  def getPB(): Vector[Piece]
+  def getPW(): Vector[Piece]
 }
 
 trait CellTrait {
