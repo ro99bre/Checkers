@@ -8,7 +8,7 @@ import com.google.inject.{Guice, Inject}
 import de.htwg.se.checkers.CheckersModule
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Piece
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json.{JsObject, JsValue, Json, Writes}
+import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
 
 import scala.io.{BufferedSource, Source}
 
@@ -44,17 +44,18 @@ class FileIO extends FileIOTrait {
     )
   }
 
+/*
   def gameToJson(game: GameTrait): JsObject = {
     Json.obj(
       "game" -> Json.obj(
         "board" -> Json.toJson(
           for {
-            y <- 0 until 8;
+            y <- 0 until 8
             x <- 0 until 8
           } yield {
             Json.obj(
-              "y" -> game.cell(y,x).y,
-              "x" -> game.cell(y,x).x,
+              "y" -> y,
+              "x" -> x,
               "cell" -> Json.toJson(game.cell(y,x))//implicit val
             )
           }
@@ -64,7 +65,7 @@ class FileIO extends FileIOTrait {
             yield {
               Json.obj(
                 "index" -> index,
-                "piece" -> Json.toJson(game.getPB())//implicit val??
+                "piece" -> Json.toJson(game.getPB(index))//implicit val??
               )
             }
         ),
@@ -73,7 +74,7 @@ class FileIO extends FileIOTrait {
             yield {
               Json.obj(
                 "index" -> index,
-                "piece" -> Json.toJson(game.getPW())
+                "piece" -> Json.toJson(game.getPW(index))
               )
             }
         ) //,
@@ -81,7 +82,7 @@ class FileIO extends FileIOTrait {
         //"winnercolor"-> Json.toJson(game.getWinnerColor())//obj???
       )
     )
-  }
+  }*/
 
   override def save(game: GameTrait): Unit = {
     val pw = new PrintWriter(new File("game.json"))
