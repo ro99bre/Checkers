@@ -14,9 +14,7 @@ class Controller(var game:Game) extends ControllerTrait {
 
   def redo() : Unit = {}
 
-  //override def getLastMoveColor(): Color.Value = Color.white
-
-  //override def getWinnerColor(): Option[Color.Value] = None
+  override def save(): Unit = {}
 
   override def getGame(): GameTrait = new Game()
 
