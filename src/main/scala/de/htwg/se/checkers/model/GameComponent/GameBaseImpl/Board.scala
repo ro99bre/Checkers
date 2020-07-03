@@ -30,3 +30,10 @@ case class Board(cells: Matrix[CellTrait]) {
 
   private def whitePiece(i:Int): Boolean = i >= 5
 }
+
+object Board {
+  import play.api.libs.json._
+  //import play.api.libs.functional._
+  implicit val boardWrites = Json.writes[Board]
+  implicit  val boardReads = Json.reads[Board]
+}

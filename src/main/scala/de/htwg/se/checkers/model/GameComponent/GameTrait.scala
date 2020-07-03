@@ -1,6 +1,6 @@
 package de.htwg.se.checkers.model.GameComponent
 
-import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Board, Cell, Color, Piece}
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Board, Cell, Color, Piece, Pieces}
 
 trait GameTrait {
 
@@ -45,11 +45,11 @@ trait GameTrait {
   def yxMinusPlusTwoCheck(s:CellTrait) : Boolean
   def updateGame(cell: CellTrait, lmc:Color.Value, piece: Option[Piece] = None, index: Option[Int] = None, winner:Option[Color.Value] = None) : GameTrait
 
-
   def getLastMoveColor() : Color.Value
   def getWinnerColor() : Option[Color.Value]
-
   def getBoard(): Board
+  def getPB(): Vector[Piece]
+  def getPW(): Vector[Piece]
 }
 
 trait CellTrait {

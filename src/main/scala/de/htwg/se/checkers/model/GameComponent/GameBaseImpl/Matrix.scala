@@ -7,3 +7,9 @@ case class Matrix[T](rows:Vector[Vector[T]]) {
 
   def replaceCell(y:Int, x:Int, cell:T): Matrix[T] = copy(rows.updated(y, rows(y).updated(x, cell)))
 }
+
+/*object Matrix {
+  import play.api.libs.json._
+  implicit val matrixWrites = Json.writes[Matrix]
+  implicit val matrixReads = Json.reads[Matrix]
+}*/

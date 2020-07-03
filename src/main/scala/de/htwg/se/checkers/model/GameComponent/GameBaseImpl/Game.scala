@@ -310,5 +310,15 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   override def getWinnerColor(): Option[Color.Value] = winnerColor
 
-  override def getBoard: Board = board
+  override def getBoard(): Board = board
+
+  override def getPB(): Vector[Piece] = pb
+
+  override def getPW(): Vector[Piece] = pw
+}
+
+object Game {
+  import play.api.libs.json._
+  implicit val gameWrites = Json.writes[Game]
+  implicit  val gameReads = Json.reads[Game]
 }

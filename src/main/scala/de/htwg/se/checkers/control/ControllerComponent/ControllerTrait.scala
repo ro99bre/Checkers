@@ -15,6 +15,8 @@ trait ControllerTrait extends Observable {
 
   def gameToString: String
 
+  def save() : Unit
+
   //def getLastMoveColor() : Color.Value
 
   //def getWinnerColor() : Option[Color.Value]
