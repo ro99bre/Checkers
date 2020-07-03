@@ -30,23 +30,3 @@ libraryDependencies ++= javaFXModules.map( m=>
 )
 
 coverageExcludedPackages := ".*GUI.*;.*TUI.*"
-
-
-/*
-resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
-
-libraryDependencies += "play" % "play_2.10" % "2.1.0"*/
-
-//libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.0-M1"
-/*
-resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
-
-libraryDependencies +=  "com.typesafe.play" %% "play-json" % "2.3.0"*/
-
-
-/*
-//FileIO
-//XML
-libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.2.0"
-//JSON
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1"*/

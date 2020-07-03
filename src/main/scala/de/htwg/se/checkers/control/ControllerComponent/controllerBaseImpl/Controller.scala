@@ -42,10 +42,6 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
     //publish???
   }
 
-  //override def getLastMoveColor(): Color.Value = game.getLastMoveColor()
-
-  //override def getWinnerColor(): Option[Color.Value] = game.getWinnerColor()
-
   override def getGame(): GameTrait = game
 
   override def gameToString:String = game.toString
