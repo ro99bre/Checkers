@@ -1,14 +1,12 @@
-package de.htwg.se.checkers.model.FileIOComponent.fileIoJsonImpl
+package de.htwg.se.checkers.model.FileIOComponent
 
 import java.io.{File, PrintWriter}
 
-import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
-import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameTrait}
-import com.google.inject.{Guice, Inject}
+import com.google.inject.Guice
 import de.htwg.se.checkers.CheckersModule
-import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Piece
+import de.htwg.se.checkers.model.GameComponent.GameTrait
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
+import play.api.libs.json.{JsValue, Json}
 
 import scala.io.{BufferedSource, Source}
 
