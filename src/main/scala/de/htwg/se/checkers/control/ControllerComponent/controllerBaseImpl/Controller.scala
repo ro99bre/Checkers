@@ -39,7 +39,11 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
   override def save() : Unit = {
     fileIo.save(game)
     notifyObservers()
-    //publish???
+  }
+
+  override def load(): Unit = {
+    game = fileIo.load
+    notifyObservers()
   }
 
   override def getGame(): GameTrait = game

@@ -96,6 +96,10 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
   override def getPB(): Vector[Piece] = pb
 
   override def getPW(): Vector[Piece] = pw
+
+  override def setCell(y: Int, x: Int, color: Color.Value, piececolor: Option[Color.Value], queen: Option[Queen.Value], kicked: Option[Kicked.Value]): Board = board
+
+  override def setPiece(index: Int, color: Color.Value, queen: Queen.Value, kicked: Kicked.Value): Vector[Piece] = pb
 }
 
 object EmptyCell extends CellTrait{

@@ -23,6 +23,8 @@ class TextUI(controller: ControllerTrait) extends Observer {
 
       case "save" :: Nil => controller.save()
 
+      case "load" :: Nil => controller.load()
+
       case "exit" :: Nil =>
 
       case _ => println("\nPossible Commands:\nnew Round:\t\t\t\t\tStarts a new Round of the game. " +

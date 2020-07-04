@@ -16,6 +16,8 @@ class Controller(var game:Game) extends ControllerTrait {
 
   override def save(): Unit = {}
 
+  override def load(): Unit = {}
+
   override def getGame(): GameTrait = new Game()
 
   def gameToString:String = ""
