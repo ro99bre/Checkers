@@ -51,8 +51,8 @@ trait GameTrait {
 
   def getBoard(): Board
 
-  def getPB(index: Int): Piece
-  def getPW(index: Int): Piece
+  def getPB(): Vector[Piece]
+  def getPW(): Vector[Piece]
 }
 
 trait CellTrait {

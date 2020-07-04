@@ -6,7 +6,7 @@ libraryDependencies += "org.scalactic" %% "scalactic" % "3.1.2"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.2" % "test"
 libraryDependencies += "org.scalatestplus" %% "junit-4-12" % "3.1.2.0" % "test"
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.1.1"
+libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.0-M1"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.8.1"
 
 libraryDependencies += "com.google.inject" % "guice" % "4.2.1"

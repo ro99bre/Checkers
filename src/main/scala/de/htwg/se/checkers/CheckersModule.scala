@@ -8,12 +8,14 @@ import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 import de.htwg.se.checkers.model.FileIOComponent.fileIoJsonImpl
+import de.htwg.se.checkers.model.FileIOComponent.fileIoXmlImpl
 
 class CheckersModule extends AbstractModule with ScalaModule {
 
   override def configure() {
     bind[GameTrait].to[GameBaseImpl.Game]
     bind[ControllerTrait].to[controllerBaseImpl.Controller]
-    bind[FileIOTrait].to[fileIoJsonImpl.FileIO]
+    bind[FileIOTrait].to[fileIoXmlImpl.FileIO]
+    //bind[FileIOTrait].to[fileIoJsonImpl.FileIO]
   }
 }
