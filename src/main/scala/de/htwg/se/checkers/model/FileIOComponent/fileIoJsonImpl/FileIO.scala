@@ -5,9 +5,10 @@ import java.io.{File, PrintWriter}
 import com.google.inject.Guice
 import de.htwg.se.checkers.CheckersModule
 import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
+import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Piece
 import de.htwg.se.checkers.model.GameComponent.GameTrait
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 
 import scala.io.{BufferedSource, Source}
 
@@ -85,7 +86,53 @@ class FileIO extends FileIOTrait {
 
   override def save(game: GameTrait): Unit = {
     val pw = new PrintWriter(new File("game.json"))
-    //pw.write(Json.prettyPrint(gameToJson(game)))
+    pw.write(Json.prettyPrint(gameToJson(game)))
     pw.close()
+  }
+
+  implicit val pieceWrites = new Writes[Option[Piece]] {
+    def writes(piece: Option[Piece]): JsObject = Json.obj(
+      //if (piece.isEmpty) "color" -> Json.toJson("None")
+      //else {
+        "color" -> Json.toJson(piece.get.color),
+        "queen" -> Json.toJson(piece.get.queen),
+        "kicked" -> Json.toJson(piece.get.kicked)
+      //}
+    )
+  }
+
+  def gameToJson(game: GameTrait) = {
+    Json.obj(
+      "game" -> Json.obj(
+        "board" -> Json.obj(
+          "cells" -> Json.toJson(//obj??? toJson???
+            for {
+              row <- 0 until 8;
+              col <- 0 until 8
+            } yield {
+              Json.obj(
+                "y" -> col,
+                "x" -> row,
+                "color" -> Json.toJson(game.cell(col,row).color),
+                if (game.cell(col,row).piece.isEmpty) "piece" -> Json.toJson("None")
+                else "piece" -> Json.toJson(game.cell(col,row).piece)//implicit Writes Option[Piece]
+              )
+            }
+          )
+        ),
+        "pb" -> Json.obj(
+
+        ),
+        "pw" -> Json.obj(
+
+        ),
+        "lmc" -> Json.obj(
+
+        ),
+        "winnerColor" -> Json.obj(
+
+        )
+      )
+    )
   }
 }
