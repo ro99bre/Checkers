@@ -51,8 +51,7 @@ trait GameTrait {
   def getPB(): Vector[Piece]
   def getPW(): Vector[Piece]
 
-  def setCell(y:Int, x:Int, color:Color.Value, piececolor: Option[Color.Value], queen: Option[Queen.Value], kicked: Option[Kicked.Value]) : Board
-  def setPiece(index:Int, color:Color.Value, queen:Queen.Value, kicked:Kicked.Value) : Vector[Piece]
+  def setPiece(index:Int, pieces:Vector[Piece], color:Color.Value, queen:Queen.Value, kicked:Kicked.Value) : Vector[Piece]
 }
 
 trait CellTrait {

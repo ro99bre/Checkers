@@ -60,7 +60,7 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
         }
         center = new VBox {
           alignment = Pos.Center
-          children = List(playButton, rulesButton(85), aboutButton(85), createExitButton(85))
+          children = List(playButton, saveButton(85), loadButton(85), rulesButton(85), aboutButton(85), createExitButton(85))
         }
       }
       root = pane1
@@ -315,6 +315,26 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
       style <== when(hover) choose standardButtonStyle() + "-fx-border-color: black;" otherwise standardButtonStyle()
     }
     aboutButton
+  }
+
+  def loadButton(recHW:Double): Button = {
+    val loadButton = new Button("Load") {
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => controller.load()
+      style <== when(hover) choose standardButtonStyle() + "-fx-border-color: black;" otherwise standardButtonStyle()
+    }
+    loadButton
+  }
+
+  def saveButton(recHW:Double): Button = {
+    val saveButton = new Button("Save") {
+      prefHeight = recHW
+      prefWidth = (stage.getWidth/4)-10
+      onAction = _ => controller.save()
+      style <== when(hover) choose standardButtonStyle() + "-fx-border-color: black;" otherwise standardButtonStyle()
+    }
+    saveButton
   }
 
   def createExitButton(recHW:Double): Button = {

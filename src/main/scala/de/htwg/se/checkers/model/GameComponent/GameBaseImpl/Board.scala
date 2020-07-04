@@ -24,6 +24,11 @@ case class Board(cells: Matrix[CellTrait]) {
     else copy(cells.replaceCell(i,j,GameBaseImpl.Cell(i, j, Color.white)))
   }
 
+  def setCell(y: Int, x: Int, color: Color.Value, piececolor: Option[Color.Value], queen: Option[Queen.Value], kicked: Option[Kicked.Value]): Board = {
+    if (piececolor.isEmpty) this.copy(this.cells.replaceCell(y,x,Cell(y,x,color,None)))
+    else this.copy(this.cells.replaceCell(y,x,Cell(y,x,color,Some(Piece(piececolor.get,queen.get,kicked.get)))))
+  }
+
   private def blackCell(i:Int, j:Int): Boolean = (i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)
 
   private def blackPiece(i:Int): Boolean = i <= 2

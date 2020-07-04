@@ -316,14 +316,6 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   override def getPW(): Vector[Piece] = pw
 
-  override def setCell(y: Int, x: Int, color: Color.Value, piececolor: Option[Color.Value], queen: Option[Queen.Value], kicked: Option[Kicked.Value]): Board = {
-    if (piececolor.isEmpty) board.copy(board.cells.replaceCell(y,x,Cell(y,x,color,None)))
-    else board.copy(board.cells.replaceCell(y,x,Cell(y,x,color,Some(Piece(piececolor.get,queen.get,kicked.get)))))
-  }
-
-  override def setPiece(index:Int, color: Color.Value, queen: Queen.Value, kicked: Kicked.Value): Vector[Piece] = {
-    if (color == Color.black) pb.updated(index,Piece(color,queen,kicked))
-    else pw.updated(index,Piece(color,queen,kicked))
-  }
+  override def setPiece(index:Int, pieces:Vector[Piece], color: Color.Value, queen: Queen.Value, kicked: Kicked.Value): Vector[Piece] = pieces.updated(index,Piece(color,queen,kicked))
 }
 
