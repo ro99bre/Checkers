@@ -1,4 +1,4 @@
-package de.htwg.se.checkers.model.FileIOComponent.FileIoJsonImpl
+package de.htwg.se.checkers.model.FileIOComponent.fileIoJsonImpl
 
 import java.io.{File, PrintWriter}
 
