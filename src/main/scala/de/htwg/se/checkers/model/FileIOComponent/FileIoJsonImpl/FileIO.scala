@@ -2,13 +2,12 @@ package de.htwg.se.checkers.model.FileIOComponent.FileIoJsonImpl
 
 import java.io.{File, PrintWriter}
 
-import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
-import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameTrait}
-import com.google.inject.{Guice, Inject}
+import com.google.inject.Guice
 import de.htwg.se.checkers.CheckersModule
-import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Piece
+import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
+import de.htwg.se.checkers.model.GameComponent.GameTrait
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
+import play.api.libs.json.{JsValue, Json}
 
 import scala.io.{BufferedSource, Source}
 
@@ -25,7 +24,7 @@ class FileIO extends FileIOTrait {
     game
   }
 
-  implicit val cellWrites = new Writes[CellTrait] {
+  /*implicit val cellWrites = new Writes[CellTrait] {
     def writes(cell: CellTrait): JsObject = Json.obj(
       "y" -> cell.y,
       "x" -> cell.x,
@@ -42,7 +41,7 @@ class FileIO extends FileIOTrait {
       "queen" -> piece.queen,
       "kicked" -> piece.kicked
     )
-  }
+  }*/
 
 /*
   def gameToJson(game: GameTrait): JsObject = {
