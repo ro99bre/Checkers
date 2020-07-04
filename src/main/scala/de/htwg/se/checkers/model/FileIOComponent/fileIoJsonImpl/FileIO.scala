@@ -120,18 +120,28 @@ class FileIO extends FileIOTrait {
             }
           )
         ),
-        "pb" -> Json.obj(
-
+        "pb" -> Json.toJson(//obj??? toJson???
+          for {index <- 0 until 12} yield {
+            Json.obj(
+              "index" -> index,
+              "color" -> Json.toJson(game.getPB()(index).color),
+              "queen" -> Json.toJson(game.getPB()(index).queen),
+              "kicked" -> Json.toJson(game.getPB()(index).kicked)
+            )
+          }
         ),
-        "pw" -> Json.obj(
-
+        "pw" -> Json.toJson(//obj??? toJson???
+          for {index <- 0 until 12} yield {
+            Json.obj(
+              "index" -> index,
+              "color" -> Json.toJson(game.getPW()(index).color),
+              "queen" -> Json.toJson(game.getPW()(index).queen),
+              "kicked" -> Json.toJson(game.getPW()(index).kicked)
+            )
+          }
         ),
-        "lmc" -> Json.obj(
-
-        ),
-        "winnerColor" -> Json.obj(
-
-        )
+        "lmc" -> Json.toJson(game.getLastMoveColor()),
+        "winnerColor" -> Json.toJson(game.getWinnerColor())
       )
     )
   }
