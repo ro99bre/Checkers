@@ -318,4 +318,3 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
 
   override def setPiece(index:Int, pieces:Vector[Piece], color: Color.Value, queen: Queen.Value, kicked: Kicked.Value): Vector[Piece] = pieces.updated(index,Piece(color,queen,kicked))
 }
-
