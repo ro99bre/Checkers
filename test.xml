@@ -1,0 +1,226 @@
+<game>
+    <board>
+        <cell y="0" x="0" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="1" x="0" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="2" x="0" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="3" x="0" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="0" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="0" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="6" x="0" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="7" x="0" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="0" x="1" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="1" x="1" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="2" x="1" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="3" x="1" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="1" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="1" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="6" x="1" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="7" x="1" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="0" x="2" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="1" x="2" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="2" x="2" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="3" x="2" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="2" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="2" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="6" x="2" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="7" x="2" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="0" x="3" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="1" x="3" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="2" x="3" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="3" x="3" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="3" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="3" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="6" x="3" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="7" x="3" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="0" x="4" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="1" x="4" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="2" x="4" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="3" x="4" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="4" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="4" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="6" x="4" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="7" x="4" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="0" x="5" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="1" x="5" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="2" x="5" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="3" x="5" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="5" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="5" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="6" x="5" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="7" x="5" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="0" x="6" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="1" x="6" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="2" x="6" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="3" x="6" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="6" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="6" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="6" x="6" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="7" x="6" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="0" x="7" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="1" x="7" color="black">
+            <piece color="black" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="2" x="7" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="3" x="7" color="black">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="4" x="7" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="5" x="7" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+        <cell y="6" x="7" color="white">
+            <piece color="None"></piece>
+        </cell>
+        <cell y="7" x="7" color="black">
+            <piece color="white" queen="notQueen" kicked="notKicked"></piece>
+        </cell>
+    </board>
+    <pb>
+        <piece index="0" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="1" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="2" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="3" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="4" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="5" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="6" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="7" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="8" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="9" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="10" color="black" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="11" color="black" queen="notQueen" kicked="notKicked"></piece>
+    </pb>
+    <pw>
+        <piece index="0" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="1" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="2" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="3" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="4" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="5" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="6" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="7" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="8" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="9" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="10" color="white" queen="notQueen" kicked="notKicked"></piece>
+        <piece index="11" color="white" queen="notQueen" kicked="notKicked"></piece>
+    </pw>
+    <lmc color="white"></lmc>
+    <winnerColor color="None"></winnerColor>
+</game>

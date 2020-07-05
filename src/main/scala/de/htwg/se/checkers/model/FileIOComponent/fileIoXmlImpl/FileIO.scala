@@ -72,9 +72,9 @@ class FileIO extends FileIOTrait{
 
   override def save(game: GameTrait): Unit = saveString(game)
 
-  def saveXML(game: GameTrait): Unit = {
+  /*def saveXML(game: GameTrait): Unit = {
     scala.xml.XML.save("game.xml", gameToXML(game))
-  }
+  }*/
 
   def saveString(game: GameTrait) : Unit = {
     import java.io._
