@@ -11,7 +11,7 @@ import scala.xml._
 
 class FileIO extends FileIOTrait{
 
-  override def load: GameTrait = {
+  override def load(): GameTrait = {
     val injector = Guice.createInjector(new CheckersModule)
     var game : GameTrait = injector.instance[GameTrait]
     var board : Board = game.getBoard()
@@ -82,7 +82,7 @@ class FileIO extends FileIOTrait{
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(gameToXML(game))
     pw.write(xml)
-    pw.close
+    pw.close()
   }
 
   def gameToXML(game: GameTrait): Elem = {
