@@ -236,5 +236,14 @@ class GameSpec extends AnyWordSpec with Matchers{
     "be able to return a board" in {
       game.getBoard should be(board)
     }
+    "be able to return black pieces" in {
+      game.getPB() should be(piecesBlack.pieces)
+    }
+    "be able to return white pieces" in {
+      game.getPW() should be(piecesWhite.pieces)
+    }
+    "be able to replace a piece in vector" in {
+      game.setPiece(0,piecesBlack.pieces,Color.black,Queen.isQueen,Kicked.isKicked) should be(piecesBlack.pieces.updated(0,Piece(Color.black,Queen.isQueen,Kicked.isKicked)))
+    }
   }
 }
