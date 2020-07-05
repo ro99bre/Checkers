@@ -1,14 +1,12 @@
 package de.htwg.se.checkers.model.FileIOComponent.fileIoJsonImpl
 
-import java.io.{File, PrintWriter}
-
 import com.google.inject.Guice
 import de.htwg.se.checkers.CheckersModule
 import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
 import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.{Board, Color, Game, Kicked, Piece, Queen}
-import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameTrait}
+import de.htwg.se.checkers.model.GameComponent.GameTrait
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
+import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 
 import scala.io.{BufferedSource, Source}
 
@@ -24,27 +22,12 @@ class FileIO extends FileIOTrait {
     var pb : Vector[Piece] = game.getPB()
     var pw : Vector[Piece] = game.getPW()
 
-    /*for {
-      row <- 0 until 8
-      col <- 0 until 8
-    } yield {
-      var color : Color.Value = Color.white
-      val y : Int = (json \ "game" \ "board" \ "cells")
-    }*/
-
-
     for (index <- 0 until 64) {
-      val cell = (json \\ "cells").head //(index)
-      //val piece = (json \\ "piece").head
-      //val piece = (cell(index) \\ "piece")
+      val cell = (json \\ "cells").head
       val x : Int = (cell \\ "x")(index).as[Int]
       val y : Int = (cell \\ "y")(index).as[Int]
-      //val y = (json \\ "y")(index).as[Int]
       var color : Color.Value = Color.white
       if ((cell \\ "color")(index).as[String] == "black") color = Color.black
-
-      //println((cell(index) \ "piece" \ "piececolor").as[String])
-      //if ((cell(index) \ "piece" \ "piececolor").toString == "None") println("None")
       if ((cell(index) \ "piece" \ "piececolor").as[String] == "None") {
         board = board.setCell(y,x,color,None,None,None)
       } else {
@@ -85,8 +68,8 @@ class FileIO extends FileIOTrait {
     if ((json \ "game" \ "winnerColor").as[String] == "white") winnerColor = Some(Color.white)
 
     source.close()
-    Game(board,pb,pw,lmc,winnerColor)
-    //game
+    game = Game(board,pb,pw,lmc,winnerColor)
+    game
   }
 
   implicit val gameWrites = new Writes[GameTrait] {
