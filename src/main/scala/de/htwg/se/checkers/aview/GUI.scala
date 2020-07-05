@@ -331,10 +331,15 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
     val saveButton = new Button("Save") {
       prefHeight = recHW
       prefWidth = (stage.getWidth/4)-10
-      onAction = _ => controller.save()
+      onAction = _ => saveClose()
       style <== when(hover) choose standardButtonStyle() + "-fx-border-color: black;" otherwise standardButtonStyle()
     }
     saveButton
+  }
+
+  def saveClose() : Unit = {
+    controller.save()
+    exit()
   }
 
   def createExitButton(recHW:Double): Button = {

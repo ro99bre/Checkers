@@ -16,7 +16,6 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
   val fileIo = injector.instance[FileIOTrait]
 
   override def createGame():Unit = {
-    //game = new Game()
     game = injector.instance[GameTrait]
     notifyObservers()
   }
@@ -42,7 +41,7 @@ class Controller @Inject() (var game:GameTrait) extends ControllerTrait {
   }
 
   override def load(): Unit = {
-    game = fileIo.load
+    game = fileIo.load()
     notifyObservers()
   }
 
