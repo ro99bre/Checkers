@@ -5,10 +5,9 @@ import java.io.{File, PrintWriter}
 import com.google.inject.Guice
 import de.htwg.se.checkers.CheckersModule
 import de.htwg.se.checkers.model.FileIOComponent.FileIOTrait
-import de.htwg.se.checkers.model.GameComponent.GameBaseImpl.Piece
-import de.htwg.se.checkers.model.GameComponent.GameTrait
+import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameTrait}
 import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json.{JsObject, JsValue, Json, Writes}
+import play.api.libs.json.{JsNumber, JsObject, JsValue, Json, Writes}
 
 import scala.io.{BufferedSource, Source}
 
@@ -25,19 +24,13 @@ class FileIO extends FileIOTrait {
     game
   }
 
-  override def save(game: GameTrait): Unit = {
-    val pw = new PrintWriter(new File("game.json"))
-    //pw.write(Json.prettyPrint(gameToJson(game)))
-    pw.close()
-  }
-
-  def gameToJson(game: GameTrait): JsObject = {
-    Json.obj(
+  implicit val gameWrites = new Writes[GameTrait] {
+    def writes(game: GameTrait): JsObject = Json.obj(
       "game" -> Json.obj(
         "board" -> Json.obj(
           "cells" -> Json.toJson(
             for {
-              row <- 0 until 8;
+              row <- 0 until 8
               col <- 0 until 8
             } yield {
               Json.obj(
@@ -68,9 +61,9 @@ class FileIO extends FileIOTrait {
           for {index <- 0 until 12} yield {
             Json.obj(
               "index" -> index,
-              "color" -> Json.toJson(game.getPW()(index).color),
-              "queen" -> Json.toJson(game.getPW()(index).queen),
-              "kicked" -> Json.toJson(game.getPW()(index).kicked)
+              "color" -> Json.toJson(game.getPB()(index).color),
+              "queen" -> Json.toJson(game.getPB()(index).queen),
+              "kicked" -> Json.toJson(game.getPB()(index).kicked)
             )
           }
         ),
@@ -78,5 +71,15 @@ class FileIO extends FileIOTrait {
         "winnerColor" -> Json.toJson(game.getWinnerColor())
       )
     )
+  }
+
+  override def save(game: GameTrait): Unit = {
+    import java.io._
+    val pw = new PrintWriter(new File("game.json"))
+    //pw.write(gameToJson(game).toString())
+    //pw.write(Json.prettyPrint(Json.toJson(gameToJson(game))))
+    //pw.write(game.toString)//prettyPrint error???
+    pw.write(Json.prettyPrint(Json.toJson(game)))
+    pw.close()
   }
 }
