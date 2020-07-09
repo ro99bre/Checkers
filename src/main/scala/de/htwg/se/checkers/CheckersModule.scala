@@ -17,7 +17,7 @@ class CheckersModule extends AbstractModule with ScalaModule {
     bind[GameTrait].to[GameBaseImpl.Game]
     bind[ControllerTrait].to[controllerBaseImpl.Controller]
     //bind[FileIOTrait].to[fileIoXmlImpl.FileIO]
-    //bind[FileIOTrait].to[fileIoJsonImpl.FileIO]
-    bind[FileIOTrait].to[fileIoJsonFileChooserImpl.FileIO]
+    bind[FileIOTrait].to[fileIoJsonImpl.FileIO]
+    //bind[FileIOTrait].to[fileIoJsonFileChooserImpl.FileIO]
   }
 }
