@@ -14,8 +14,10 @@ import scala.io.{BufferedSource, Source}
 class FileIO extends FileIOTrait {
 
   override def load(): GameTrait = {
+    val fileChooser = new FileChooser()
+    val file = fileChooser.showOpenDialog(null)
 
-    val source: BufferedSource = Source.fromFile("game.json")
+    val source: BufferedSource = Source.fromFile(file.getAbsoluteFile)
     val sourceString : String = source.getLines().mkString
     val json : JsValue = Json.parse(sourceString)
     val injector = Guice.createInjector(new CheckersModule)
