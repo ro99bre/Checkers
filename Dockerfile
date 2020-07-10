@@ -1,5 +1,5 @@
-FROM openjdk:11
-ARG SBT_VERSION=1.3.7
+FROM openjdk:14-buster
+ARG SBT_VERSION=1.3.13
 
 # Tnstall sbt
 RUN \
@@ -11,4 +11,6 @@ RUN \
 
 WORKDIR /Sources
 ADD . /Sources
-CMD sbt run Checkers
+RUN sbt compile
+
+CMD sbt run
