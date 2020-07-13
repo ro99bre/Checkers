@@ -7,6 +7,7 @@ import org.scalatest.wordspec.AnyWordSpec
 class GameSpec extends AnyWordSpec with Matchers{
 
   "A Game" should {
+    //creation of data for comparison in tests; jump ahead to line 134 for actual tests
     val piecesBlack = new Pieces(Color.black)
     val piecesWhite = new Pieces(Color.white)
     val board = new Board().createBoard(piecesBlack.pieces, piecesWhite.pieces)

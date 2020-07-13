@@ -153,6 +153,7 @@ class GUI(controller: ControllerTrait) extends JFXApp with Observer {
     rules
   }
 
+  //creates background rectangle for "Rules" and "About" text
   def rulesAboutBGRectangle(hw:Double): Rectangle = {
     val rect : Rectangle = new Rectangle{
       width = hw

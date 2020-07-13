@@ -2,6 +2,14 @@ package de.htwg.se.checkers.model.GameComponent.GameBaseImpl
 
 import de.htwg.se.checkers.model.GameComponent.{CellTrait, GameBaseImpl, GameTrait}
 
+/**
+ *
+ * @param board, game board of 8x8 (pieces can only be on black cells)
+ * @param pb, vector of black game pieces
+ * @param pw, vector of white game pieces
+ * @param lmc, color of last move (for checking rules)
+ * @param winnerColor, optional color of winner (if winner exists)
+ */
 case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.Value, winnerColor : Option[Color.Value] = None) extends GameTrait{
 
   def this() = this(new Board().createBoard(new Pieces(Color.black).pieces, new Pieces(Color.white).pieces),new Pieces(Color.black).pieces, new Pieces(Color.white).pieces, Color.white)
@@ -25,12 +33,12 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     var pwTemp = pw
     var temp: Board = board.copy(board.cells.replaceCell(d.y,d.x,Cell(d.y, d.x, d.color, s.piece)))
     temp = temp.copy(temp.cells.replaceCell(s.y, s.x, Cell(s.y, s.x, s.color)))
-    if (deKickPieceCheck(s,d,temp,opponentColor).isDefined) {
+    if (deKickPieceCheck(s,d,temp,opponentColor).isDefined) { //undoes kicking of piece
       temp = deKickPieceCheck(s,d,temp,opponentColor).get._1
       pbTemp = deKickPieceCheck(s,d,temp,opponentColor).get._2
       pwTemp = deKickPieceCheck(s,d,temp,opponentColor).get._3
     }
-    if (deQueenDestinationCheck(s,d,temp).isDefined) {
+    if (deQueenDestinationCheck(s,d,temp).isDefined) { //undoes crowning of piece
       temp = deQueenDestinationCheck(s,d,temp).get._1
       pbTemp = deQueenDestinationCheck(s,d,temp).get._2
       pwTemp = deQueenDestinationCheck(s,d,temp).get._3
@@ -247,6 +255,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     bool
   }
 
+  //checks if cells around start cell are empty for possible moves
   override def plusCheck(start:CellTrait, board: Board): Boolean = {
     if (yxPlusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y+1, start.x+1))) return false
     if (yxPlusMinusOneCheck(start) && cellEmptyCheck(board.cells.cell(start.y+1, start.x-1))) return false
@@ -263,6 +272,7 @@ case class Game(board: Board, pb: Vector[Piece], pw: Vector[Piece], lmc: Color.V
     true
   }
 
+  //tries different coordinates, which are in reach from the start cell; returns true if cell with those coordinates exists
   override def yxPlusOneCheck(s:CellTrait) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x + 1 >= 0 && s.x + 1 <= 7
 
   override def yxPlusMinusOneCheck(s:CellTrait) : Boolean = s.y + 1 >= 0 && s.y + 1 <= 7 && s.x - 1 >= 0 && s.x - 1 <= 7
