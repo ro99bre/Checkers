@@ -15,9 +15,9 @@ trait ControllerTrait extends Observable {
 
   def gameToString: String
 
-  def save() : Unit
+  def save(fileName: String) : Unit
 
-  def load() : Unit
+  def load(fileName: String) : Unit
 
   def getGame(): GameTrait
 }

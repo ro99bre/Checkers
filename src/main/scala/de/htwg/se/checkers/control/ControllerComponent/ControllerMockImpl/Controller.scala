@@ -14,9 +14,9 @@ class Controller(var game:Game) extends ControllerTrait {
 
   def redo() : Unit = {}
 
-  override def save(): Unit = {}
+  override def save(fileName: String): Unit = {}
 
-  override def load(): Unit = {}
+  override def load(fileName: String): Unit = {}
 
   override def getGame(): GameTrait = new Game()
 
