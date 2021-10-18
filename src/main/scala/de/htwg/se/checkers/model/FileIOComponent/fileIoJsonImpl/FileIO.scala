@@ -12,8 +12,8 @@ import scala.io.{BufferedSource, Source}
 
 class FileIO extends FileIOTrait {
 
-  override def load(): GameTrait = {
-    val source: BufferedSource = Source.fromFile("game.json")
+  override def load(fileName: String): GameTrait = {
+    val source: BufferedSource = Source.fromFile(fileName)
     val sourceString : String = source.getLines().mkString
     val json : JsValue = Json.parse(sourceString)
     val injector = Guice.createInjector(new CheckersModule)
@@ -123,9 +123,9 @@ class FileIO extends FileIOTrait {
     )
   }
 
-  override def save(game: GameTrait): Unit = {
+  override def save(game: GameTrait, fileName: String): Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("game.json"))
+    val pw = new PrintWriter(new File(fileName))
     pw.write(Json.prettyPrint(Json.toJson(game)))
     pw.close()
   }

@@ -11,13 +11,13 @@ import scala.xml._
 
 class FileIO extends FileIOTrait{
 
-  override def load(): GameTrait = {
+  override def load(fileName: String): GameTrait = {
     val injector = Guice.createInjector(new CheckersModule)
     var game : GameTrait = injector.instance[GameTrait]
     var board : Board = game.getBoard()
     var pb : Vector[Piece] = game.getPB()
     var pw : Vector[Piece] = game.getPW()
-    val file = scala.xml.XML.loadFile("game.xml")
+    val file = scala.xml.XML.loadFile(fileName)
 
     val cellNodes = (file \\ "game" \\ "board" \\ "cell")
     for (cell <- cellNodes) {
@@ -70,15 +70,15 @@ class FileIO extends FileIOTrait{
     game
   }
 
-  override def save(game: GameTrait): Unit = saveString(game)
+  override def save(game: GameTrait, fileName: String): Unit = saveString(game, fileName)
 
   /*def saveXML(game: GameTrait): Unit = {
     scala.xml.XML.save("game.xml", gameToXML(game))
   }*/
 
-  def saveString(game: GameTrait) : Unit = {
+  def saveString(game: GameTrait, fileName: String) : Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("game.xml"))
+    val pw = new PrintWriter(new File(fileName))
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(gameToXML(game))
     pw.write(xml)
