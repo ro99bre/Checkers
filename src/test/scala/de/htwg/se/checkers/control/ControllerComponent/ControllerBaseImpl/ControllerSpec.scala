@@ -52,11 +52,11 @@ class ControllerSpec extends AnyWordSpec with Matchers{
         controller.move(0,2,1,3)
         controller.game.cell(2,0).piece.isDefined should be(false)
         controller.game.cell(3,1).piece.isDefined should be(true)
-        controller.save()
+        controller.save("game.json")
         observer.updated should be(true)
       }
       "notify Observer after loading of game" in {
-        controller.load()
+        controller.load("game.json")
         controller.game.cell(2,0).piece.isDefined should be(false)
         controller.game.cell(3,1).piece.isDefined should be(true)
         observer.updated should be(true)

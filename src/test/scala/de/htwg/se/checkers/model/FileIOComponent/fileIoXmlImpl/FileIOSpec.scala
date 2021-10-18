@@ -13,11 +13,11 @@ class FileIOSpec extends AnyWordSpec with Matchers{
     val testFile = scala.xml.XML.loadFile("test.xml")
 
     "be able to save a game to a file" in {
-      fileIO.save(game)
+      fileIO.save(game, "game.xml")
       scala.xml.XML.loadFile("game.xml") should be(testFile)
     }
     "be able to load a game from a file" in {
-      fileIO.load().getBoard() should be(board)
+      fileIO.load("game.xml").getBoard() should be(board)
     }
   }
 }

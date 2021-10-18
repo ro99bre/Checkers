@@ -16,7 +16,7 @@ class FileIOSpec extends AnyWordSpec with Matchers{
     testSource.close()
 
     "be able to save a game to a file" in {
-      fileIO.save(new Game())
+      fileIO.save(new Game(), "game.json")
       val source: BufferedSource = Source.fromFile("game.json")
       val sourceString : String = source.getLines().mkString
       val json : JsValue = Json.parse(sourceString)
@@ -24,7 +24,7 @@ class FileIOSpec extends AnyWordSpec with Matchers{
       json should be(testJson)
     }
     "be able to load a game from a file" in {
-      fileIO.load().getBoard() should be(new Game().board)
+      fileIO.load("game.json").getBoard() should be(new Game().board)
     }
   }
 }
